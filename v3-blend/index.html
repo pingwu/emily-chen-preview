@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emily Chen Advisory</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Serif+TC:wght@400;600&display=swap">
+<style>
+  :root{
+    --cream:#F8F2E9; --card:#FFFDF9; --ink:#241C14; --muted:#7C7061;
+    --dark:#1B1611; --dark-ink:#EFE7DA; --dark-muted:#A39683;
+    --bronze:#A8834F; --bronze-bright:#C6A36B; --sage:#7E8B76;
+    --hairline:#E5DBCB; --dark-hairline:#373026;
+  }
+  body{margin:0;background:var(--cream);color:var(--ink);
+    font-family:"Karla","Helvetica Neue",Arial,sans-serif;line-height:1.65}
+  .serif{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400}
+  .tc{font-family:"Noto Serif TC","PMingLiU",serif}
+  a{color:var(--bronze)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-offset:3px}
+  .wrap{max-width:70rem;margin:0 auto;padding:0 1.75rem}
+  .label{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:var(--bronze)}
+  .dark .label{color:var(--bronze-bright)}
+  h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;
+    font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:.5rem 0 1.2rem;text-wrap:balance}
+
+  .demo-note{background:#241C14;color:#C6A36B;font-size:.72rem;letter-spacing:.08em;
+    padding:.55rem 1.75rem;text-align:center}
+
+  .dark{background:var(--dark);color:var(--dark-ink)}
+  nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem 1.6rem;
+    padding:1.5rem 1.75rem;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    border-bottom:1px solid var(--dark-hairline)}
+  nav .brand{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.25rem;letter-spacing:.18em;text-transform:uppercase}
+  nav .brand .tc{font-size:.85rem;color:var(--dark-muted);letter-spacing:.1em;margin-left:.6em}
+  nav .links{display:flex;gap:1.8rem;flex-wrap:wrap}
+  nav .links a{color:var(--dark-muted);text-decoration:none}
+
+  .hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;
+    background:
+      linear-gradient(180deg,rgba(27,22,17,.45) 0%,rgba(27,22,17,.93) 85%),
+      url("https://picsum.photos/id/1031/1800/1100") center/cover no-repeat,
+      linear-gradient(160deg,#3a3128 0%,#1f1913 60%,#151109 100%)}
+  .hero .wrap{padding-bottom:4.5rem;padding-top:4rem}
+  .hero .leadin{color:var(--dark-muted);max-width:36ch;margin:0 0 1.2rem;font-size:1.02rem}
+  .hero h1{font-size:clamp(2.5rem,6.5vw,4.6rem);line-height:1.08;margin:0;
+    font-weight:400;letter-spacing:.01em;text-wrap:balance}
+  .hero h1 em{color:var(--bronze-bright)}
+  .hero .after{color:var(--dark-ink);max-width:52ch;margin:1.6rem 0 0}
+  .hero .after strong{color:var(--bronze-bright)}
+  .stocknote{position:absolute;top:1rem;right:1rem;font-size:.58rem;letter-spacing:.2em;
+    text-transform:uppercase;color:rgba(239,231,218,.45)}
+  .btnrow{margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap}
+  .btn{display:inline-block;background:var(--bronze);color:#1B1611;text-decoration:none;font-weight:700;
+    padding:.85rem 2rem;font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;border-radius:2px}
+  .btn.ghost{background:transparent;color:var(--bronze-bright);border:1px solid var(--bronze)}
+
+  .cred{border-top:1px solid var(--dark-hairline)}
+  .cred .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(12rem,1fr));gap:1.6rem;
+    padding:2.2rem 1.75rem;text-align:center}
+  .cred .n{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.5rem;color:var(--bronze-bright)}
+  .cred .t{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--dark-muted);margin-top:.25rem}
+
+  section{padding:4.75rem 0}
+  .moments .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(17rem,1fr));gap:1.4rem;margin-top:2.2rem}
+  .mcard{background:var(--card);border:1px solid var(--hairline);border-radius:4px;overflow:hidden;
+    display:flex;flex-direction:column}
+  .mcard .ph{height:11rem;background-size:cover;background-position:center;position:relative;
+    background-color:#CBB79B}
+  .mcard:nth-child(1) .ph{background-image:url("https://picsum.photos/id/1048/800/500"),linear-gradient(150deg,#c9b195,#a08661)}
+  .mcard:nth-child(2) .ph{background-image:url("https://picsum.photos/id/1040/800/500"),linear-gradient(150deg,#bda98d,#93795a)}
+  .mcard:nth-child(3) .ph{background-image:url("https://picsum.photos/id/1076/800/500"),linear-gradient(150deg,#b6a184,#8b7253)}
+  .stocktag{position:absolute;bottom:.6rem;right:.6rem;font-size:.56rem;letter-spacing:.18em;
+    text-transform:uppercase;background:rgba(27,22,17,.65);color:#F8F2E9;padding:.28rem .55rem;border-radius:2px}
+  .mcard .body{padding:1.5rem 1.5rem 1.7rem;display:flex;flex-direction:column;gap:.6rem}
+  .mcard h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:1.45rem;margin:0;line-height:1.2}
+  .mcard p{color:var(--muted);font-size:.93rem;margin:0}
+  .mcard .tagline{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--sage);font-weight:700}
+
+  .quoteband{background:var(--dark);color:var(--dark-ink);text-align:center}
+  .quoteband .wrap{padding:3.6rem 1.75rem}
+  .quoteband .q{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;
+    font-size:clamp(1.4rem,3.2vw,2.1rem);max-width:36ch;margin:0 auto;text-wrap:balance}
+  .quoteband .who{margin-top:1.1rem;font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--dark-muted)}
+
+  .story .wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:3.2rem;align-items:center}
+  @media(max-width:52rem){.story .wrap{grid-template-columns:1fr}}
+  .story .photo{aspect-ratio:3/4;border-radius:4px;position:relative;
+    background:url("https://picsum.photos/id/453/800/1060") center/cover no-repeat,
+    linear-gradient(160deg,#c7b294,#977e5c)}
+  .story p{color:var(--muted);max-width:56ch}
+  .story .creds{display:grid;gap:.35rem 1.4rem;grid-template-columns:max-content 1fr;
+    font-size:.88rem;margin-top:1.6rem}
+  .story .creds dt{color:var(--sage);font-weight:700;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;align-self:baseline}
+  .story .creds dd{margin:0}
+  @media(max-width:30rem){.story .creds{grid-template-columns:1fr}}
+  .biline{border-left:3px solid var(--bronze);padding:.2rem 0 .2rem 1.2rem;margin-top:1.6rem}
+  .biline p{margin:0;font-size:.95rem}
+  .biline .tc{display:block;color:var(--muted);margin-top:.5rem}
+
+  .blog .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.4rem;margin-top:2rem}
+  .post{background:var(--card);border:1px solid var(--hairline);border-radius:4px;overflow:hidden}
+  .post .ph{height:9.5rem;background-size:cover;background-position:center;position:relative;background-color:#CBB79B}
+  .post:nth-child(1) .ph{background-image:url("https://picsum.photos/id/180/700/450"),linear-gradient(150deg,#c9b195,#a08661)}
+  .post:nth-child(2) .ph{background-image:url("https://picsum.photos/id/60/700/450"),linear-gradient(150deg,#bda98d,#93795a)}
+  .post:nth-child(3) .ph{background-image:url("https://picsum.photos/id/24/700/450"),linear-gradient(150deg,#b6a184,#8b7253)}
+  .post .body{padding:1.2rem 1.3rem 1.4rem}
+  .post h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:1.2rem;margin:0 0 .4rem}
+  .post p{color:var(--muted);font-size:.87rem;margin:0}
+
+  .contact{background:var(--dark);color:var(--dark-ink);text-align:center}
+  .contact p{color:var(--dark-muted);max-width:46ch;margin:0 auto}
+  .todo{border:1.5px dashed #877a4e;background:#241f14;color:#BCA96F;border-radius:3px;
+    padding:.9rem 1.2rem;font-size:.82rem;max-width:34rem;margin:1.6rem auto 0}
+
+  footer{padding:2.3rem 0 3rem;font-size:.76rem;color:var(--muted);border-top:1px solid var(--hairline)}
+  footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+
+<div class="demo-note">STYLE STUDY V3 — the blend: V1's authority + V2's warmth, structured around decision moments. Stock imagery + lorem ipsum placeholders for visual direction only.</div>
+
+<div class="dark">
+  <nav>
+    <div class="brand">Emily Chen<span class="tc">房產 · 策略 · 教練</span></div>
+    <div class="links"><a href="#moments">Decision Moments</a><a href="#story">About</a><a href="#journal">Journal</a><a href="#contact">Contact</a></div>
+  </nav>
+  <div class="hero">
+    <span class="stocknote">Stock photo placeholder</span>
+    <div class="wrap">
+      <span class="label">Silicon Valley Real Estate &amp; Wealth Strategy · Palo Alto</span>
+      <p class="leadin">Most agents tell you what a home is worth. I ask a different question first:</p>
+      <h1 class="serif">What are you most <em>worried about</em> right now?</h1>
+      <p class="after">Real estate strategy, executive coaching, and investment thinking for founders and executives. <strong>These aren’t separate services. They’re one conversation.</strong></p>
+      <div class="btnrow"><a class="btn" href="#contact">Begin the Conversation</a><a class="btn ghost" href="#moments">Which moment is yours?</a></div>
+    </div>
+  </div>
+  <div class="cred">
+    <div class="wrap">
+      <div><div class="n serif">Compass</div><div class="t">Advisor since 2018 · DRE #01870054</div></div>
+      <div><div class="n serif">UCLA · Stanford</div><div class="t">Anderson EMBA · GSB SMM</div></div>
+      <div><div class="n serif">EN / 繁中</div><div class="t">Bilingual · US · TW · CN · JP</div></div>
+      <div><div class="n serif">$ ——</div><div class="t">Sold volume · TODO source</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="moments" id="moments">
+  <div class="wrap">
+    <span class="label">Decision Moments</span>
+    <h2>Three doors into the same conversation</h2>
+    <div class="cards">
+      <div class="mcard"><div class="ph"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><span class="tagline">Equity event</span>
+          <h3>Your equity just vested. Should any of it become a house?</h3>
+          <p>The hardest question is rarely the house — it’s the concentration. RSUs, one employer, one sector, and possibly one very large local asset on top. Diversification first; the property second.</p></div></div>
+      <div class="mcard"><div class="ph"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><span class="tagline">Relocation</span>
+          <h3>The offer means moving. Should the house decide?</h3>
+          <p>A relocation is a career decision and a housing decision on the same deadline. With experience across the US, Taiwan, China, and Japan, Emily weighs the role, the market, and the family’s footing as one problem.</p></div></div>
+      <div class="mcard"><div class="ph"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><span class="tagline">Career pivot</span>
+          <h3>The next role changes more than your title.</h3>
+          <p>A promotion, a startup jump, or a step back changes what your finances must do — and what your home has to be. The pivot conversation and the property conversation happen at the same table.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="quoteband">
+  <div class="wrap">
+    <p class="q">“These aren’t separate services. They’re one conversation.”</p>
+    <div class="who">Emily Chen — from her own profile</div>
+  </div>
+</div>
+
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="photo"><span class="stocktag">Stock placeholder</span></div>
+    <div>
+      <span class="label">About Emily</span>
+      <h2>Strategy first. Credentials in the footnotes.</h2>
+      <p>Real Estate Advisor at Compass, Palo Alto, and independent business strategic coach — both since 2018. Executive coach for Taiwan’s Ministry of Science and Technology. A decade of community leadership across Silicon Valley’s technology and cross-border business networks. Now publicly building AI into the practice: market strategy, decision support, and content systems.</p>
+      <dl class="creds">
+        <dt>License</dt><dd>CA DRE #01870054 · e-PRO® (NAR)</dd>
+        <dt>Education</dt><dd>UCLA Anderson (Executive MBA) · Stanford GSB (Strategic Marketing Management)</dd>
+        <dt>Community</dt><dd>VP, SVCACCA · Co-Chair, Monte Jade Annual Conference</dd>
+      </dl>
+      <div class="biline">
+        <p>Advising in English and Traditional Chinese — cross-border families don’t need a translator in the room; they need an advisor who was already thinking in both.</p>
+        <p class="tc" lang="zh-Hant">Emily 以中英雙語提供諮詢服務，並具備美國、台灣、中國與日本的跨境工作經驗。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blog" id="journal">
+  <div class="wrap">
+    <span class="label">Journal</span>
+    <h2>Market intelligence, written plainly</h2>
+    <div class="cards">
+      <article class="post"><div class="ph"><span class="stocktag">Stock placeholder</span></div><div class="body"><h3>The AI-wealth effect on Bay Area housing</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p></div></article>
+      <article class="post"><div class="ph"><span class="stocktag">Stock placeholder</span></div><div class="body"><h3>From RSUs to real assets: diversification</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p></div></article>
+      <article class="post"><div class="ph"><span class="stocktag">Stock placeholder</span></div><div class="body"><h3>What a buyer’s agent actually does</h3><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="label">Private Consultation</span>
+    <h2>Start with the worry, not the listing.</h2>
+    <p>Equity events, relocations, career pivots — advised discreetly, in English or Traditional Chinese.</p>
+    <div class="todo"><strong>[TODO: source needed]</strong> — preferred contact channel (email / scheduling link / phone), LinkedIn URL, headshot rights.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Emily Chen · Real Estate Advisor, Compass · Palo Alto, CA</span>
+    <span>CA DRE #01870054 · English / 繁體中文</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emily Chen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Serif+TC:wght@400;600&display=swap">
+<style>
+  :root {
+    --paper: #F6F8F5;
+    --ink: #1B2320;
+    --muted: #5C6862;
+    --accent: #2F5D4B;
+    --accent-ink: #24483B;
+    --hairline: #DBE1DA;
+    --card: #FFFFFF;
+    --todo-bg: #F0EFE6;
+    --todo-ink: #7A7355;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131A17;
+      --ink: #E4EAE5;
+      --muted: #96A29A;
+      --accent: #7FB89F;
+      --accent-ink: #9CCBB4;
+      --hairline: #28332E;
+      --card: #1A231F;
+      --todo-bg: #23241C;
+      --todo-ink: #A79F7C;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131A17;
+    --ink: #E4EAE5;
+    --muted: #96A29A;
+    --accent: #7FB89F;
+    --accent-ink: #9CCBB4;
+    --hairline: #28332E;
+    --card: #1A231F;
+    --todo-bg: #23241C;
+    --todo-ink: #A79F7C;
+  }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.5rem; }
+  a { color: var(--accent-ink); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .serif { font-family: "Instrument Serif", Georgia, "Times New Roman", serif; font-weight: 400; }
+  .tc { font-family: "Noto Serif TC", "PMingLiU", serif; }
+  .eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent-ink); font-weight: 700;
+  }
+
+  header.top { border-bottom: 1px solid var(--hairline); }
+  header.top .wrap {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 1.25rem; padding-bottom: 1.25rem; gap: 1rem; flex-wrap: wrap;
+  }
+  .wordmark { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.01em; }
+  .wordmark .tc { font-weight: 600; color: var(--muted); margin-left: 0.5em; font-size: 0.95rem; }
+  .toploc { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  .hero { padding: 5.5rem 0 4.5rem; }
+  .hero .lead-in { color: var(--muted); max-width: 34ch; margin: 0 0 1.75rem; font-size: 1.05rem; }
+  .hero h1 {
+    font-size: clamp(2.4rem, 6.5vw, 3.9rem); line-height: 1.12; margin: 0;
+    text-wrap: balance; letter-spacing: -0.01em;
+  }
+  .hero h1 em { color: var(--accent-ink); font-style: italic; }
+  .hero .after {
+    margin: 2rem 0 0; max-width: 52ch; font-size: 1.05rem;
+  }
+  .hero .after strong { color: var(--accent-ink); }
+
+  section { padding: 3.5rem 0; border-top: 1px solid var(--hairline); }
+  h2.q {
+    font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.2; margin: 0.6rem 0 1.1rem;
+    text-wrap: balance; letter-spacing: -0.005em;
+  }
+  section p { max-width: 60ch; }
+  .moment p:last-of-type { margin-bottom: 0; }
+
+  .about-grid { display: grid; gap: 0.4rem 1.5rem; grid-template-columns: max-content 1fr; margin: 1.75rem 0 0; font-size: 0.9rem; }
+  .about-grid dt { color: var(--muted); }
+  .about-grid dd { margin: 0; font-variant-numeric: tabular-nums; }
+  @media (max-width: 30rem) { .about-grid { grid-template-columns: 1fr; } .about-grid dt { margin-top: 0.6rem; } }
+
+  .biline {
+    background: var(--card); border: 1px solid var(--hairline); border-radius: 2px;
+    padding: 1.75rem 1.75rem 1.6rem; margin-top: 1rem;
+  }
+  .biline p { margin: 0; }
+  .biline .tc { display: block; margin-top: 0.9rem; color: var(--muted); font-size: 1rem; }
+
+  .todo {
+    border: 1.5px dashed var(--todo-ink); background: var(--todo-bg); color: var(--todo-ink);
+    border-radius: 2px; padding: 1rem 1.25rem; font-size: 0.85rem; margin: 1.5rem 0 0;
+  }
+  .todo strong { letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.72rem; }
+
+  .contact .cta {
+    display: inline-block; background: var(--accent); color: var(--paper);
+    padding: 0.8rem 1.6rem; border-radius: 2px; text-decoration: none; font-weight: 700;
+    margin-top: 1.25rem;
+  }
+  footer { border-top: 1px solid var(--hairline); padding: 2rem 0 3rem; font-size: 0.8rem; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 0.4rem 2rem; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <div class="wordmark">Emily Chen<span class="tc">房產 · 策略 · 教練</span></div>
+    <div class="toploc">Compass · Palo Alto, CA · DRE #01870054</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <p class="lead-in">Most agents tell you what a home is worth. I ask a different question first:</p>
+    <h1 class="serif">What are you most <em>worried about</em> right now?</h1>
+    <p class="after">Real estate strategy, executive coaching, and investment thinking — for people whose biggest housing decisions arrive tangled up with career decisions. <strong>These aren’t separate services. They’re one conversation.</strong></p>
+  </div>
+</div>
+
+<section class="moment" id="rsu">
+  <div class="wrap">
+    <span class="eyebrow">Decision moment · Equity</span>
+    <h2 class="q serif">Your equity just vested. Should any of it become a house?</h2>
+    <p>For senior people at Bay Area tech companies, the hardest real estate question is rarely the house — it’s the concentration. RSUs, a single employer, a single sector, and now possibly a single very large local asset on top of it. Emily works on the diversification question first: what an equity-heavy balance sheet can responsibly carry, and only then which property fits.</p>
+    <p>Her recent public writing covers the AI-wealth effect on Bay Area housing and RSU-to-real-estate diversification strategy — the market she works in is the one her clients are being paid in.</p>
+  </div>
+</section>
+
+<section class="moment" id="relocation">
+  <div class="wrap">
+    <span class="eyebrow">Decision moment · Relocation</span>
+    <h2 class="q serif">The offer means moving. Should the house decide?</h2>
+    <p>A relocation is a career decision and a housing decision made under the same deadline — and most advice treats them separately. With experience across the US, Taiwan, China, and Japan, Emily has spent her career helping people weigh a role, a market, and a family’s footing as one problem, not three.</p>
+  </div>
+</section>
+
+<section class="moment" id="pivot">
+  <div class="wrap">
+    <span class="eyebrow">Decision moment · Career pivot</span>
+    <h2 class="q serif">The next role changes more than your title.</h2>
+    <p>A promotion, a startup jump, or a step back all change what your finances have to do for you — and what your home has to be. Emily has coached founders and executives as a business strategic coach since 2018, alongside her real estate practice at Compass. The pivot conversation and the property conversation happen at the same table.</p>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <span class="eyebrow">About</span>
+    <h2 class="q serif">Strategy first. Credentials in the footnotes.</h2>
+    <p>Emily Chen is a Silicon Valley real estate and wealth strategist working at the intersection of real estate strategy, executive coaching, and investment thinking. She has advised at Compass since 2018, coached founders and executives independently since 2018, and served as an executive coach for Taiwan’s Ministry of Science and Technology. She is publicly building AI into her practice — market strategy, decision support, and content systems — not watching from the sidelines.</p>
+    <dl class="about-grid">
+      <dt>Brokerage</dt><dd>Compass, Palo Alto — Real Estate Advisor since 2018</dd>
+      <dt>License</dt><dd>CA DRE #01870054 · e-PRO® (NAR)</dd>
+      <dt>Education</dt><dd>UCLA Anderson (Executive MBA) · Stanford GSB (Strategic Marketing Management)</dd>
+      <dt>Community</dt><dd>VP, Silicon Valley Chinese American Computer &amp; Commerce Assn. · Co-Chair, Monte Jade Annual Conference</dd>
+    </dl>
+    <div class="biline">
+      <p>Emily advises in English and Traditional Chinese, with working experience across the US, Taiwan, China, and Japan. Cross-border families don’t need a translator in the room — they need an advisor who was already thinking in both.</p>
+      <p class="tc" lang="zh-Hant">Emily 以中英雙語提供諮詢服務，並具備美國、台灣、中國與日本的跨境工作經驗。</p>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <span class="eyebrow">Results</span>
+    <h2 class="q serif">What clients say</h2>
+    <div class="todo">
+      <strong>[TODO: source needed]</strong><br>
+      Client testimonials — real estate and coaching. Nothing is shown here until real quotes are collected and approved. No invented social proof on this site.
+    </div>
+    <div class="todo">
+      <strong>[TODO: source needed]</strong><br>
+      Transaction record / representative engagements. Awaiting confirmed figures from Emily.
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <span class="eyebrow">Contact</span>
+    <h2 class="q serif">Start with the worry, not the listing.</h2>
+    <p>If you’re near an equity event, a relocation, or a career pivot, the first conversation is about what’s actually keeping you up at night — not square footage.</p>
+    <div class="todo">
+      <strong>[TODO: source needed]</strong><br>
+      Preferred contact channel (email / scheduling link / phone), LinkedIn profile URL, and headshot with confirmed usage rights.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Emily Chen · Real Estate Advisor, Compass · Palo Alto, CA</span>
+    <span>CA DRE #01870054 · English / 繁體中文</span>
+  </div>
+</footer>
+
+</body>
+</html>

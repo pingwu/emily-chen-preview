@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emily Chen Estates</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+  :root{
+    --bg:#0E0F10; --panel:#16181A; --ink:#EDEAE3; --muted:#9A968C;
+    --gold:#B39A6B; --hairline:#2A2C2E;
+  }
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Jost","Helvetica Neue",Arial,sans-serif;font-weight:300;line-height:1.6;}
+  .serif{font-family:"Cormorant Garamond",Georgia,serif;}
+  a{color:var(--ink);text-decoration:none}
+  a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .wrap{max-width:74rem;margin:0 auto;padding:0 2rem}
+  .label{font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+
+  nav{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:.8rem 1.6rem;
+    padding:1.6rem 2rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;}
+  nav .links{display:flex;gap:2.2rem;color:var(--muted)}
+  nav .brand{font-size:.85rem;letter-spacing:.34em}
+
+  .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;
+    background:
+      linear-gradient(180deg,rgba(14,15,16,.25) 0%,rgba(14,15,16,.88) 82%),
+      url("https://picsum.photos/id/1048/1800/1100") center/cover no-repeat,
+      linear-gradient(160deg,#23282c 0%,#101315 60%,#0b0d0e 100%);}
+  .hero .wrap{padding-bottom:5rem}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.2rem);font-weight:400;line-height:1.05;margin:.8rem 0 1rem;
+    text-transform:uppercase;letter-spacing:.06em;text-wrap:balance}
+  .hero p{max-width:46ch;color:var(--muted);font-size:1rem}
+  .stocknote{position:absolute;top:1rem;right:1rem;font-size:.6rem;letter-spacing:.2em;
+    text-transform:uppercase;color:rgba(237,234,227,.45)}
+
+  .stats{border-top:1px solid var(--hairline);border-bottom:1px solid var(--hairline);
+    background:var(--panel)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:2rem;
+    padding:2.6rem 2rem;text-align:center}
+  .stats .n{font-family:"Cormorant Garamond",Georgia,serif;font-size:2.2rem;color:var(--gold);
+    font-variant-numeric:tabular-nums}
+  .stats .t{font-size:.68rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+  section{padding:5.5rem 0}
+  h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;text-transform:uppercase;
+    letter-spacing:.12em;font-size:clamp(1.6rem,3.4vw,2.4rem);margin:.7rem 0 2.2rem;text-wrap:balance}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(19rem,1fr));gap:1.4rem}
+  .card{background:var(--panel);border:1px solid var(--hairline)}
+  .card .ph{aspect-ratio:4/3;background:linear-gradient(150deg,#2c3136,#191d20);
+    background-size:cover;background-position:center;position:relative}
+  .card:nth-child(1) .ph{background-image:url("https://picsum.photos/id/164/900/675"),linear-gradient(150deg,#2c3136,#191d20)}
+  .card:nth-child(2) .ph{background-image:url("https://picsum.photos/id/1029/900/675"),linear-gradient(150deg,#2c3136,#191d20)}
+  .card:nth-child(3) .ph{background-image:url("https://picsum.photos/id/1040/900/675"),linear-gradient(150deg,#2c3136,#191d20)}
+  .card:nth-child(4) .ph{background-image:url("https://picsum.photos/id/122/900/675"),linear-gradient(150deg,#2c3136,#191d20)}
+  .card:nth-child(5) .ph{background-image:url("https://picsum.photos/id/188/900/675"),linear-gradient(150deg,#2c3136,#191d20)}
+  .card:nth-child(6) .ph{background-image:url("https://picsum.photos/id/101/900/675"),linear-gradient(150deg,#2c3136,#191d20)}
+  .card .meta{padding:1.1rem 1.2rem 1.3rem}
+  .card .price{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.3rem;color:var(--gold)}
+  .card .addr{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.25rem}
+  .ph .tag{position:absolute;left:.8rem;top:.8rem;font-size:.58rem;letter-spacing:.22em;
+    text-transform:uppercase;background:rgba(14,15,16,.7);color:var(--muted);padding:.3rem .6rem}
+
+  .split{display:grid;grid-template-columns:1.1fr 1fr;gap:3.5rem;align-items:center}
+  @media(max-width:52rem){.split{grid-template-columns:1fr}}
+  .portrait{aspect-ratio:3/4;background:
+      url("https://picsum.photos/id/453/800/1060") center/cover no-repeat,
+      linear-gradient(160deg,#2a2f33,#121517);border:1px solid var(--hairline)}
+  .about p{color:var(--muted);max-width:58ch}
+  .about .sig{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:1.35rem;
+    color:var(--ink);margin-top:1.6rem}
+
+  .press .row{display:flex;gap:3rem;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    color:var(--muted);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.15rem;font-style:italic}
+
+  .blog .grid .meta .price{font-size:1.05rem;color:var(--ink);font-style:italic}
+  .blog p.lorem{font-size:.85rem;color:var(--muted);margin:.5rem 0 0}
+
+  .cta{background:var(--panel);border-top:1px solid var(--hairline);text-align:center}
+  .cta h2{margin-bottom:1rem}
+  .cta a.btn{display:inline-block;border:1px solid var(--gold);color:var(--gold);
+    padding:.9rem 2.6rem;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;margin-top:1.2rem}
+  footer{padding:2.5rem 0 3rem;color:var(--muted);font-size:.72rem;letter-spacing:.12em;
+    border-top:1px solid var(--hairline)}
+  footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  .demo-note{background:#1d1a12;color:#B39A6B;font-size:.72rem;letter-spacing:.08em;
+    padding:.55rem 2rem;text-align:center}
+</style>
+</head>
+<body>
+
+
+<div class="demo-note">STYLE STUDY V1 — inventory-led luxury direction (à la aaronkirman.com). Stock imagery + placeholder figures for visual direction only. Facts from Emily's Compass profile.</div>
+
+<nav>
+  <div class="links"><a href="#properties">Properties</a><a href="#about">About</a><a href="#journal">Journal</a></div>
+  <div class="brand serif">EMILY&nbsp;CHEN</div>
+  <div class="links"><a href="#contact">Contact</a><span>EN / 中文</span></div>
+</nav>
+
+<div class="hero">
+  <span class="stocknote">Stock photo placeholder</span>
+  <div class="wrap">
+    <span class="label">Silicon Valley · Palo Alto</span>
+    <h1 class="serif">Real Estate &amp;<br>Wealth Strategy</h1>
+    <p>Advising founders and executives on Silicon Valley property — where the market, the equity, and the career are one portfolio. Compass · CA DRE #01870054.</p>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="wrap">
+    <div><div class="n">$ ——</div><div class="t">Sold volume · TODO source</div></div>
+    <div><div class="n">2018</div><div class="t">Advising at Compass since</div></div>
+    <div><div class="n">——</div><div class="t">Transactions · TODO source</div></div>
+    <div><div class="n">EN / 繁中</div><div class="t">Bilingual advisory</div></div>
+  </div>
+</div>
+
+<section id="properties">
+  <div class="wrap">
+    <span class="label">Portfolio</span>
+    <h2>Featured Properties</h2>
+    <div class="grid">
+      <div class="card"><div class="ph"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price">$ —,———,———</div><div class="addr">Ipsum Dolor Ln · Palo Alto</div></div></div>
+      <div class="card"><div class="ph"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price">$ —,———,———</div><div class="addr">Amet Consect Ct · Atherton</div></div></div>
+      <div class="card"><div class="ph"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price">$ —,———,———</div><div class="addr">Tempor Incidid Ave · Menlo Park</div></div></div>
+      <div class="card"><div class="ph"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price">$ —,———,———</div><div class="addr">Labore Dolore Dr · Los Altos</div></div></div>
+      <div class="card"><div class="ph"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price">$ —,———,———</div><div class="addr">Veniam Quis Way · Woodside</div></div></div>
+      <div class="card"><div class="ph"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price">$ —,———,———</div><div class="addr">Ullamco Laboris Rd · Cupertino</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap split">
+    <div class="portrait" role="img" aria-label="Portrait placeholder — stock image"></div>
+    <div class="about">
+      <span class="label">The Advisor</span>
+      <h2>Emily Chen</h2>
+      <p>Real Estate Advisor at Compass, Palo Alto, and independent business strategic coach — both since 2018. UCLA Anderson Executive MBA; Stanford GSB Strategic Marketing Management; e-PRO®. Services span real estate, commercial real estate, negotiation, executive coaching, and marketing consulting.</p>
+      <p>She advises in English and Traditional Chinese, with working experience across the US, Taiwan, China, and Japan.</p>
+      <p class="sig serif">“Most agents tell you what a home is worth. I ask a different question first: What are you most worried about right now?”</p>
+    </div>
+  </div>
+</section>
+
+<section class="press">
+  <div class="wrap">
+    <span class="label">Affiliations</span>
+    <div class="row" style="margin-top:1.4rem">
+      <span>Compass</span><span>REALTOR® · e-PRO®</span><span>Monte Jade — Conference Co-Chair</span><span>SVCACCA — VP</span><span>Taiwan MOST — Executive Coach</span>
+    </div>
+  </div>
+</section>
+
+<section class="blog" id="journal">
+  <div class="wrap">
+    <span class="label">Journal</span>
+    <h2>Market Intelligence</h2>
+    <div class="grid">
+      <div class="card"><div class="ph" style="background-image:url('https://picsum.photos/id/180/900/675'),linear-gradient(150deg,#2c3136,#191d20)"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price serif">The AI-wealth effect on Bay Area housing</div><p class="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p></div></div>
+      <div class="card"><div class="ph" style="background-image:url('https://picsum.photos/id/60/900/675'),linear-gradient(150deg,#2c3136,#191d20)"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price serif">From RSUs to real assets: diversification</div><p class="lorem">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p></div></div>
+      <div class="card"><div class="ph" style="background-image:url('https://picsum.photos/id/1076/900/675'),linear-gradient(150deg,#2c3136,#191d20)"><span class="tag">Stock placeholder</span></div><div class="meta"><div class="price serif">What a buyer's agent actually does</div><p class="lorem">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="label">Private Consultation</span>
+    <h2>Begin the Conversation</h2>
+    <p style="color:var(--muted);max-width:44ch;margin:0 auto">Equity events, relocations, acquisitions — advised discreetly, in English or Traditional Chinese.</p>
+    <a class="btn" href="#">Inquire — TODO contact</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>EMILY CHEN · COMPASS · PALO ALTO</span>
+    <span>CA DRE #01870054 · ENGLISH / 繁體中文</span>
+  </div>
+</footer>
+
+</body>
+</html>
