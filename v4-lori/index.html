@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emily Chen | Palo Alto Real Estate &amp; Wealth Advisor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --paper:#FFFFFF; --ink:#1B1A17; --muted:#6E695F; --line:#E6E2D8;
+    --bronze:#9C7A4A; --bronze-deep:#7C5F37; --wash:#F7F4EE; --dark:#15130F;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Inter",Arial,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-offset:3px}
+  .serif{font-family:"Fraunces",Georgia,serif;font-weight:400}
+  .wrap{max-width:76rem;margin:0 auto;padding:0 2rem}
+  .eyebrow{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--bronze-deep);font-weight:600}
+  img{display:block;max-width:100%}
+
+  .topbar{background:var(--dark);color:#D9D2C2;font-size:.72rem;letter-spacing:.1em}
+  .topbar .wrap{display:flex;justify-content:flex-end;gap:1.6rem;padding:.55rem 2rem}
+
+  header.main{position:absolute;top:2.1rem;left:0;right:0;z-index:3}
+  header.main .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+  .navlinks{display:flex;gap:2rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#fff}
+  .navlinks a{text-decoration:none}
+  .brandmark{font-family:"Fraunces",Georgia,serif;font-size:1.1rem;letter-spacing:.1em;color:#fff}
+
+  .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;justify-content:center;
+    background:
+      linear-gradient(180deg,rgba(21,19,15,.15) 0%,rgba(21,19,15,.72) 88%),
+      url("assets/hero.jpg") center/cover no-repeat;
+    text-align:center;color:#fff}
+  .hero .inner{padding-bottom:5.5rem;max-width:40rem}
+  .hero .kicker{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:#E9DCC4;margin-bottom:.8rem}
+  .hero h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:400;letter-spacing:.02em;margin:0 0 .9rem;text-wrap:balance}
+  .hero p{color:#EDE8DC;font-size:1.05rem;max-width:36ch;margin:0 auto}
+  .hero .dre{margin-top:1.1rem;font-size:.76rem;letter-spacing:.1em;color:#C9BFA5}
+  .btn{display:inline-block;margin-top:1.8rem;border:1px solid #fff;color:#fff;text-decoration:none;
+    padding:.9rem 2.4rem;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;border-radius:1px}
+  .btn:hover{background:#fff;color:var(--dark)}
+  .stocknote{position:absolute;top:5.6rem;right:1.4rem;z-index:2;font-size:.58rem;letter-spacing:.16em;
+    text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+  section{padding:5.5rem 0}
+  h2{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:clamp(1.9rem,4vw,2.7rem);
+    margin:.5rem 0 1.3rem;text-wrap:balance}
+  .center{text-align:center}
+
+  .intro{background:var(--wash)}
+  .intro .grid{display:grid;grid-template-columns:.95fr 1.15fr;gap:3.4rem;align-items:center}
+  @media(max-width:54rem){.intro .grid{grid-template-columns:1fr}}
+  .intro .photo{aspect-ratio:4/5;background:url("assets/emily-headshot.jpg") center/cover no-repeat;background-color:#EFE9DC;position:relative;border-radius:2px}
+  .intro .photo .stocktag{position:absolute;bottom:.7rem;right:.7rem;font-size:.56rem;letter-spacing:.16em;
+    text-transform:uppercase;background:rgba(21,19,15,.6);color:#fff;padding:.28rem .55rem;border-radius:2px}
+  .intro p{color:var(--muted);max-width:52ch}
+  .intro .learn{display:inline-block;margin-top:.6rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bronze-deep);text-decoration:none;border-bottom:1px solid var(--bronze)}
+
+  .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:2rem;padding:2.6rem 2rem;text-align:center}
+  .stats .n{font-family:"Fraunces",Georgia,serif;font-size:1.7rem;color:var(--bronze-deep)}
+  .stats .t{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.3rem}
+
+  .props .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(19rem,1fr));gap:1.5rem;margin-top:2.3rem}
+  .pcard{border:1px solid var(--line);border-radius:2px;overflow:hidden;background:#fff}
+  .pcard .ph{aspect-ratio:4/3;background-size:cover;background-position:center;position:relative}
+  .pcard .ph .stocktag{position:absolute;top:.6rem;left:.6rem;font-size:.56rem;letter-spacing:.14em;
+    text-transform:uppercase;background:rgba(21,19,15,.6);color:#fff;padding:.26rem .5rem;border-radius:2px}
+  .pcard .body{padding:1.1rem 1.25rem 1.3rem}
+  .pcard .price{font-family:"Fraunces",Georgia,serif;font-size:1.2rem;color:var(--bronze-deep)}
+  .pcard .addr{font-size:.82rem;color:var(--muted);margin-top:.2rem}
+  .pcard .facts{font-size:.72rem;color:var(--muted);margin-top:.5rem;letter-spacing:.04em}
+  .pcard .view{display:inline-block;margin-top:.7rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bronze-deep);border-bottom:1px solid var(--bronze)}
+  .sourcenote{margin-top:1.6rem;font-size:.8rem;color:var(--muted);border:1.5px dashed #C9BFA5;
+    background:var(--wash);border-radius:2px;padding:.85rem 1.1rem;max-width:44rem}
+
+  .quoteband{background:var(--dark);color:#EDE8DC;text-align:center}
+  .quoteband .q{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:clamp(1.35rem,3vw,2rem);
+    max-width:36ch;margin:0 auto;text-wrap:balance}
+  .quoteband .who{margin-top:1rem;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:#B9AE93}
+
+  .testimonials .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.4rem;margin-top:2rem}
+  .tcard{background:var(--wash);border:1.5px dashed #C9BFA5;border-radius:2px;padding:1.5rem 1.6rem;color:var(--muted);font-size:.9rem}
+  .tcard strong{display:block;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze-deep);margin-bottom:.5rem}
+
+  .hoods .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:1.2rem;margin-top:2.2rem}
+  .hcard{position:relative;aspect-ratio:1/1;border-radius:2px;overflow:hidden}
+  .hcard img{width:100%;height:100%;object-fit:cover}
+  .hcard .label{position:absolute;inset:auto 0 0 0;padding:1rem 1.1rem;
+    background:linear-gradient(0deg,rgba(21,19,15,.78),transparent);color:#fff;
+    font-family:"Fraunces",Georgia,serif;font-size:1.15rem}
+
+  .blog .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.4rem;margin-top:2rem}
+  .post{border:1px solid var(--line);border-radius:2px;overflow:hidden}
+  .post .ph{height:9.5rem;background-size:cover;background-position:center}
+  .post .body{padding:1.2rem 1.3rem 1.4rem}
+  .post h3{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:1.15rem;margin:0 0 .4rem}
+  .post p{color:var(--muted);font-size:.87rem;margin:0}
+
+  .cta{background:var(--wash);text-align:center}
+  .cta .todo{margin:1.4rem auto 0;max-width:34rem;border:1.5px dashed #C9BFA5;background:#fff;
+    color:var(--bronze-deep);font-size:.82rem;border-radius:2px;padding:.85rem 1.1rem}
+
+  footer{background:var(--dark);color:#B9AE93;padding:2.6rem 0;font-size:.78rem}
+  footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a{text-decoration:none}
+
+  .demo-note{background:#F2E9D8;color:#7C5F37;font-size:.72rem;letter-spacing:.06em;padding:.55rem 2rem;text-align:center}
+</style>
+</head>
+<body>
+
+
+<div class="demo-note">STYLE STUDY V4 — 80% Lori Buecheler / Compass agent-site clone (full-bleed hero, bio, listings grid, testimonials, communities, blog) blended with 20% Emily-specific content from V3 (her verbatim question, decision-moments, bilingual note). Stock photography; sold prices and testimonials are marked TODO — Emily has no public transaction data to draw from.</div>
+
+<div class="topbar"><div class="wrap"><span>(510) 908-0081</span><span>Compass · Palo Alto, CA</span></div></div>
+
+<div class="hero">
+  <span class="stocknote">Stock photo placeholder</span>
+  <header class="main">
+    <div class="wrap">
+      <span class="brandmark">Emily Chen</span>
+      <div class="navlinks"><a href="#about">Meet Emily</a><a href="#properties">Properties</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a></div>
+    </div>
+  </header>
+  <div class="inner">
+    <div class="kicker">Silicon Valley &amp; The Peninsula</div>
+    <h1 class="serif">What are you most<br>worried about right now?</h1>
+    <p>Most agents tell you what a home is worth. Emily asks that question first — then brings real estate strategy, executive coaching, and investment thinking to the answer, as one conversation.</p>
+    <div class="dre">CA DRE #01870054 · Compass</div>
+    <a class="btn" href="#contact">Let's Connect</a>
+  </div>
+</div>
+
+<section class="intro" id="about">
+  <div class="wrap grid">
+    <div class="photo" role="img" aria-label="Emily Chen — official Compass profile photo"><span class="stocktag">Compass profile photo (300px — TODO: hi-res)</span></div>
+    <div>
+      <span class="eyebrow">Meet Emily Chen</span>
+      <h2>Strategy, not just square footage.</h2>
+      <p>In a market full of agents competing on transaction volume, Emily works differently: real estate strategy, executive coaching, and investment thinking, treated as one conversation rather than three separate services. She advises founders and executives — many navigating an equity event, a relocation, or a career pivot — in English and Traditional Chinese, with working experience across the US, Taiwan, China, and Japan.</p>
+      <p>She holds an Executive MBA from UCLA Anderson and a Strategic Marketing Management certificate from Stanford GSB, and has coached founders and executives independently since 2018 alongside her advisory practice at Compass.</p>
+      <a class="learn" href="#properties">Learn More</a>
+      <div style="border-left:3px solid var(--bronze);padding:.1rem 0 .1rem 1.1rem;margin-top:1.4rem">
+        <p style="margin:0;font-size:.92rem;color:var(--ink)">Cross-border families don't need a translator in the room — they need an advisor who was already thinking in both.</p>
+        <p lang="zh-Hant" style="margin:.4rem 0 0;color:var(--muted);font-family:'Fraunces',Georgia,serif">Emily 以中英雙語提供諮詢服務，並具備美國、台灣、中國與日本的跨境工作經驗。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap">
+    <div><div class="n serif">2018</div><div class="t">Advising at Compass since</div></div>
+    <div><div class="n serif">UCLA · Stanford</div><div class="t">Anderson EMBA · GSB SMM</div></div>
+    <div><div class="n serif">EN / 繁中</div><div class="t">US · Taiwan · China · Japan</div></div>
+    <div><div class="n serif">e-PRO®</div><div class="t">NAR-certified · DRE #01870054</div></div>
+  </div>
+</div>
+
+<section class="moments">
+  <div class="wrap">
+    <span class="eyebrow">One Conversation, Three Doors In</span>
+    <h2>Which moment is yours?</h2>
+    <div class="grid">
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop5.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="addr" style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze-deep)">Equity Event</div><h3 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.25rem;margin:.3rem 0 .5rem">Your equity just vested. Should any of it become a house?</h3><p style="color:var(--muted);font-size:.9rem;margin:0">Diversification first — the property second.</p></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/hood2.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="addr" style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze-deep)">Relocation</div><h3 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.25rem;margin:.3rem 0 .5rem">The offer means moving. Should the house decide?</h3><p style="color:var(--muted);font-size:.9rem;margin:0">One decision, weighed as one problem — not three.</p></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop6.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="addr" style="font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze-deep)">Career Pivot</div><h3 style="font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:1.25rem;margin:.3rem 0 .5rem">The next role changes more than your title.</h3><p style="color:var(--muted);font-size:.9rem;margin:0">The pivot conversation and the property conversation, at the same table.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="props" id="properties">
+  <div class="wrap">
+    <span class="eyebrow">Portfolio</span>
+    <h2>Representative Properties</h2>
+    <div class="grid">
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop1.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="price">$ —,———,———</div><div class="addr">Ipsum Dolor Lane, Palo Alto, CA</div><div class="facts">— Beds · — Baths · —,——— Sq.Ft.</div><a class="view" href="#">View Listing</a></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop2.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="price">$ —,———,———</div><div class="addr">Amet Consect Court, Atherton, CA</div><div class="facts">— Beds · — Baths · —,——— Sq.Ft.</div><a class="view" href="#">View Listing</a></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop3.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="price">$ —,———,———</div><div class="addr">Tempor Incidid Avenue, Menlo Park, CA</div><div class="facts">— Beds · — Baths · —,——— Sq.Ft.</div><a class="view" href="#">View Listing</a></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop4.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="price">$ —,———,———</div><div class="addr">Labore Dolore Drive, Los Altos, CA</div><div class="facts">— Beds · — Baths · —,——— Sq.Ft.</div><a class="view" href="#">View Listing</a></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop5.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="price">$ —,———,———</div><div class="addr">Veniam Quis Way, Woodside, CA</div><div class="facts">— Beds · — Baths · —,——— Sq.Ft.</div><a class="view" href="#">View Listing</a></div></div>
+      <div class="pcard"><div class="ph" style="background-image:url('assets/prop6.jpg')"><span class="stocktag">Stock placeholder</span></div>
+        <div class="body"><div class="price">$ —,———,———</div><div class="addr">Ullamco Laboris Road, Cupertino, CA</div><div class="facts">— Beds · — Baths · —,——— Sq.Ft.</div><a class="view" href="#">View Listing</a></div></div>
+    </div>
+    <div class="sourcenote"><strong>[TODO: source needed]</strong> — Emily's actual sold/represented properties, prices, and specs. No transaction data is publicly available on her Compass profile; this section is structural placeholder only, not a claim of past sales.</div>
+  </div>
+</section>
+
+<div class="quoteband">
+  <div class="wrap">
+    <p class="q serif">"Most agents tell you what a home is worth. I ask a different question first: What are you most worried about right now?"</p>
+    <div class="who">Emily Chen — from her own profile</div>
+  </div>
+</div>
+
+<section class="testimonials" id="testimonials">
+  <div class="wrap center">
+    <span class="eyebrow">Client Experience</span>
+    <h2>Testimonials</h2>
+    <div class="cards" style="text-align:left">
+      <div class="tcard"><strong>[TODO: source needed]</strong>Real client testimonial — real estate. Awaiting an approved quote from Emily before anything is published here.</div>
+      <div class="tcard"><strong>[TODO: source needed]</strong>Real client testimonial — coaching engagement. Awaiting an approved quote from Emily before anything is published here.</div>
+      <div class="tcard"><strong>[TODO: source needed]</strong>Real client testimonial — bilingual / cross-border client. Awaiting an approved quote from Emily before anything is published here.</div>
+    </div>
+  </div>
+</section>
+
+<section class="hoods">
+  <div class="wrap">
+    <span class="eyebrow">Where Emily Works</span>
+    <h2>Communities</h2>
+    <div class="grid">
+      <div class="hcard"><img src="assets/hood1.jpg" alt="Stock photo placeholder — Palo Alto"><div class="label serif">Palo Alto</div></div>
+      <div class="hcard"><img src="assets/hood2.jpg" alt="Stock photo placeholder — Menlo Park"><div class="label serif">Menlo Park</div></div>
+      <div class="hcard"><img src="assets/hood3.jpg" alt="Stock photo placeholder — Atherton"><div class="label serif">Atherton</div></div>
+      <div class="hcard"><img src="assets/hood4.jpg" alt="Stock photo placeholder — Los Altos"><div class="label serif">Los Altos</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="blog">
+  <div class="wrap">
+    <span class="eyebrow">Market Update</span>
+    <h2>From the Journal</h2>
+    <div class="cards">
+      <article class="post"><div class="ph" style="background-image:url('assets/prop2.jpg')"></div><div class="body"><h3>The AI-wealth effect on Bay Area housing</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p></div></article>
+      <article class="post"><div class="ph" style="background-image:url('assets/prop5.jpg')"></div><div class="body"><h3>From RSUs to real assets: diversification</h3><p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p></div></article>
+      <article class="post"><div class="ph" style="background-image:url('assets/hood2.jpg')"></div><div class="body"><h3>What a buyer's agent actually does</h3><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <div class="wrap center">
+    <span class="eyebrow">Private Consultation</span>
+    <h2>Let's Connect</h2>
+    <p style="color:var(--muted);max-width:44ch;margin:0 auto">Equity events, relocations, career pivots — advised discreetly, in English or Traditional Chinese.</p>
+    <a class="btn" style="color:var(--bronze-deep);border-color:var(--bronze-deep)" href="tel:+15109080081">(510) 908-0081</a>
+    <div class="todo">[TODO: source needed] — confirm preferred email / scheduling link, and headshot usage rights before this goes live.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Emily Chen · Real Estate Advisor, Compass · Palo Alto, CA</span>
+    <span>CA DRE #01870054 · (510) 908-0081 · English / 繁體中文</span>
+  </div>
+</footer>
+
+</body>
+</html>
