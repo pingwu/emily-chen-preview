@@ -23,18 +23,43 @@
   .topbar{background:var(--dark);color:#D9D2C2;font-size:.72rem;letter-spacing:.1em}
   .topbar .wrap{display:flex;justify-content:flex-end;gap:1.6rem;padding:.55rem 2rem}
 
-  header.main{position:absolute;top:2.1rem;left:0;right:0;z-index:3}
-  header.main .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+  header.main{position:absolute;top:0;left:0;right:0;z-index:4;padding-top:1.5rem}
+  header.main .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  .menu-toggle{display:flex;align-items:center;gap:.6rem;background:none;border:0;color:#fff;
+    font:inherit;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;padding:.4rem 0}
+  .menu-toggle .bars{display:inline-flex;flex-direction:column;gap:4px}
+  .menu-toggle .bars span{display:block;width:20px;height:1.5px;background:#fff}
   .navlinks{display:flex;gap:2rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#fff}
   .navlinks a{text-decoration:none}
-  .brandmark{font-family:"Fraunces",Georgia,serif;font-size:1.1rem;letter-spacing:.1em;color:#fff}
+  @media(max-width:64rem){.navlinks{display:none}}
+  .brandmark{font-family:"Fraunces",Georgia,serif;font-size:1.15rem;letter-spacing:.14em;color:#fff;text-align:center}
+  .brandmark .div{color:var(--bronze-bright,#C9A36B);margin:0 .5em}
+
+  .menu-overlay{position:fixed;inset:0;z-index:10;background:var(--dark);color:#EFE9DC;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .35s ease}
+  .menu-overlay.open{opacity:1;pointer-events:auto}
+  .menu-overlay .close{position:absolute;top:1.8rem;right:2rem;background:none;border:0;color:#EFE9DC;
+    font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+  .menu-overlay ul{list-style:none;margin:0;padding:0;text-align:center}
+  .menu-overlay li{margin:.5rem 0}
+  .menu-overlay a{color:#EFE9DC;text-decoration:none;font-family:"Fraunces",Georgia,serif;
+    font-size:clamp(1.4rem,4vw,2.1rem);font-weight:400}
+  .menu-overlay a:hover{color:var(--bronze-deep)}
 
   .hero{position:relative;min-height:92vh;display:flex;align-items:flex-end;justify-content:center;
-    background:
-      linear-gradient(180deg,rgba(21,19,15,.15) 0%,rgba(21,19,15,.72) 88%),
-      url("assets/hero.jpg") center/cover no-repeat;
-    text-align:center;color:#fff}
-  .hero .inner{padding-bottom:5.5rem;max-width:40rem}
+    text-align:center;color:#fff;overflow:hidden}
+  .hero .slide{position:absolute;inset:0;background-size:cover;background-position:center;
+    opacity:0;transition:opacity 1.4s ease}
+  .hero .slide.active{opacity:1}
+  .hero .slide::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(21,19,15,.2) 0%,rgba(21,19,15,.74) 88%)}
+  .hero .dots{position:absolute;bottom:2.4rem;left:50%;transform:translateX(-50%);z-index:2;
+    display:flex;gap:.5rem}
+  .hero .dots button{width:7px;height:7px;border-radius:50%;border:1px solid rgba(255,255,255,.7);
+    background:transparent;padding:0;cursor:pointer}
+  .hero .dots button.active{background:#fff}
+  .hero .inner{position:relative;z-index:1;padding:6.5rem 1.5rem 6.5rem;max-width:40rem}
   .hero .kicker{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:#E9DCC4;margin-bottom:.8rem}
   .hero h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:400;letter-spacing:.02em;margin:0 0 .9rem;text-wrap:balance}
   .hero p{color:#EDE8DC;font-size:1.05rem;max-width:36ch;margin:0 auto}
@@ -120,12 +145,19 @@
 
 <div class="topbar"><div class="wrap"><span>(510) 908-0081</span><span>Compass · Palo Alto, CA</span></div></div>
 
-<div class="hero">
-  <span class="stocknote">Stock photo placeholder</span>
+<div class="hero" id="hero-carousel">
+  <span class="stocknote">Stock photo placeholders — auto-rotating</span>
+  <div class="slide active" style="background-image:url('assets/hero2.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/hero3.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/hero4.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/hero.jpg')"></div>
   <header class="main">
     <div class="wrap">
-      <span class="brandmark">Emily Chen</span>
-      <div class="navlinks"><a href="#about">Meet Emily</a><a href="#properties">Properties</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a></div>
+      <button class="menu-toggle" id="menu-open" aria-haspopup="true" aria-controls="menu-overlay">
+        <span class="bars"><span></span><span></span><span></span></span> Menu
+      </button>
+      <span class="brandmark">Emily<span class="div">|</span>COMPASS</span>
+      <div class="navlinks"><a href="#about">Meet Emily</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a><span>(510) 908-0081</span></div>
     </div>
   </header>
   <div class="inner">
@@ -133,6 +165,12 @@
     <h1 class="serif">What are you most<br>worried about right now?</h1>
     <p>Most agents tell you what a home is worth. Emily asks that question first — then brings real estate strategy, executive coaching, and investment thinking to the answer, as one conversation.</p>
     <div class="dre">CA DRE #01870054 · Compass</div>
+    <div class="dots" role="tablist" aria-label="Hero background slides">
+      <button class="active" data-i="0" aria-label="Slide 1"></button>
+      <button data-i="1" aria-label="Slide 2"></button>
+      <button data-i="2" aria-label="Slide 3"></button>
+      <button data-i="3" aria-label="Slide 4"></button>
+    </div>
     <a class="btn" href="#contact">Let's Connect</a>
   </div>
 </div>
@@ -260,6 +298,46 @@
     <span>CA DRE #01870054 · (510) 908-0081 · English / 繁體中文</span>
   </div>
 </footer>
+
+<div class="menu-overlay" id="menu-overlay">
+  <button class="close" id="menu-close" aria-label="Close menu">Close ✕</button>
+  <ul>
+    <li><a href="#hero-carousel">Home</a></li>
+    <li><a href="#about">Meet Emily</a></li>
+    <li><a href="#properties">Representative Properties</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#">Communities</a></li>
+    <li><a href="#">Market Update</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
+<script>
+  (function(){
+    var slides = document.querySelectorAll('#hero-carousel .slide');
+    var dots = document.querySelectorAll('#hero-carousel .dots button');
+    var i = 0, timer;
+    function show(n){
+      slides[i].classList.remove('active'); dots[i].classList.remove('active');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('active'); dots[i].classList.add('active');
+    }
+    function next(){ show(i + 1); }
+    function start(){ timer = setInterval(next, 5000); }
+    function stop(){ clearInterval(timer); }
+    dots.forEach(function(d){ d.addEventListener('click', function(){ stop(); show(+d.dataset.i); start(); }); });
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+
+    var open = document.getElementById('menu-open'), close = document.getElementById('menu-close'),
+        overlay = document.getElementById('menu-overlay');
+    function openMenu(){ overlay.classList.add('open'); }
+    function closeMenu(){ overlay.classList.remove('open'); }
+    open.addEventListener('click', openMenu);
+    close.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+  })();
+</script>
 
 </body>
 </html>
