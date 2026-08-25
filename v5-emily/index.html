@@ -110,22 +110,24 @@
   }
   .btn-outline:hover { background: var(--bg-accent); border-color: var(--bg-accent); }
 
-  /* Properties Slider */
-  .properties { 
-    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
-    gap: 2rem; padding: 0 3rem 6rem; 
-    -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+  /* Properties Grid */
+  .properties {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 2.5rem; padding: 0 2rem 4rem; max-width: 76rem; margin: 0 auto;
   }
-  .properties::-webkit-scrollbar { display: none; }
-  .prop-card { min-width: 80%; scroll-snap-align: center; position: relative; }
+  .prop-card { position: relative; }
   .prop-image { aspect-ratio: 16/9; background-color: #eee; background-size: cover; background-position: center; }
   .prop-info {
-    position: absolute; bottom: -3rem; right: 2rem; background: var(--white);
-    padding: 2.5rem; width: auto; min-width: 300px; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    background: var(--white); padding: 1.5rem 0 0;
   }
   .prop-info h3 { margin: 0 0 0.5rem; font-size: 1.5rem; }
   .prop-info .price { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
   .prop-info .specs { display: flex; gap: 1rem; color: var(--gray-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .prop-source-note {
+    grid-column: 1/-1; margin-top: -1.5rem; font-size: 0.82rem; color: var(--gray-dark);
+    border: 1.5px dashed var(--accent); background: var(--bg-light); border-radius: 2px;
+    padding: 0.85rem 1.1rem; max-width: 44rem;
+  }
   .btn-solid {
     display: inline-block; padding: 0.8rem 2rem; background: var(--accent); color: var(--white);
     text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem;
@@ -160,17 +162,16 @@
   /* Mobile Responsive Fixes */
   @media(max-width: 48rem) {
     .intro, .testimonials, .neighborhoods { padding: 4rem 1.5rem; }
-    .properties { padding: 0 1.5rem 2rem; gap: 1rem; }
-    .prop-card { min-width: 90%; }
-    .prop-info { 
-      position: relative; bottom: auto; right: auto; left: auto;
-      width: 100%; max-width: none; box-shadow: none; padding: 1.5rem 0;
-    }
+    .properties { padding: 0 1.5rem 3rem; gap: 2rem; }
     .quote { font-size: 1.25rem; }
   }
+
+  .demo-note{background:#F2E9D8;color:#7C5F37;font-size:.72rem;letter-spacing:.06em;padding:.55rem 2rem;text-align:center}
 </style>
 </head>
 <body>
+
+<div class="demo-note">STYLE STUDY V5 — pure Lori Buecheler structure with an Amber Housley-warm palette. Stock photography; property specs and testimonial are marked TODO — Emily has no public transaction data or approved quotes to draw from.</div>
 
 <header class="main">
   <div class="wrap">
@@ -214,7 +215,7 @@
 <section id="portfolio" style="padding-top: 4rem;">
   <div class="properties">
     <div class="prop-card">
-      <div class="prop-image" style="background-image: url('../v4-lori/assets/prop1.jpg');"></div>
+      <div class="prop-image" style="background-image: url('assets/prop1.jpg');"></div>
       <div class="prop-info">
         <h3 class="serif">Ipsum Dolor Lane</h3>
         <div class="price">Palo Alto, CA</div>
@@ -227,7 +228,7 @@
       </div>
     </div>
     <div class="prop-card">
-      <div class="prop-image" style="background-image: url('../v4-lori/assets/prop2.jpg');"></div>
+      <div class="prop-image" style="background-image: url('assets/prop2.jpg');"></div>
       <div class="prop-info">
         <h3 class="serif">Amet Consect Court</h3>
         <div class="price">Atherton, CA</div>
@@ -239,14 +240,17 @@
         <a href="#" class="btn-solid">View Listing</a>
       </div>
     </div>
+    <div class="prop-source-note"><strong>[TODO: source needed]</strong> — Emily's actual represented properties, prices, and specs. No transaction data is publicly available on her Compass profile; this section is structural placeholder only, not a claim of past sales.</div>
   </div>
 </section>
 
 <section id="testimonials" class="testimonials">
   <div class="testimonial-wrap">
     <h2 class="serif">Testimonials</h2>
-    <div class="quote serif">"Emily is more than an agent. She fundamentally understood the complexity of our equity situation and guided us through a major transition with clarity and strategic vision."</div>
-    <div class="author">Executive Client, Palo Alto</div>
+    <div class="quote serif" style="font-style:normal;font-size:1rem;color:var(--gray-dark);border:1.5px dashed var(--accent);background:var(--white);border-radius:2px;padding:1.5rem 1.75rem;display:inline-block;text-align:left;max-width:34rem">
+      <strong style="display:block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem">[TODO: source needed]</strong>
+      Real client testimonial. Awaiting an approved quote from Emily before anything is published here — no testimonial has been written or collected yet.
+    </div>
   </div>
 </section>
 
@@ -254,12 +258,12 @@
   <h2 class="serif">Neighborhoods</h2>
   <div class="grid">
     <a href="#" class="hood-card" style="background-image:url('assets/hood1.jpg');">
-      <div class="hood-label serif">Coaching Spaces</div>
+      <div class="hood-label serif">Palo Alto</div>
     </a>
-    <a href="#" class="hood-card" style="background-image: url('../v4-lori/assets/hood2.jpg');">
+    <a href="#" class="hood-card" style="background-image: url('assets/hood2.jpg');">
       <div class="hood-label serif">Menlo Park</div>
     </a>
-    <a href="#" class="hood-card" style="background-image: url('../v4-lori/assets/hood3.jpg');">
+    <a href="#" class="hood-card" style="background-image: url('assets/hood3.jpg');">
       <div class="hood-label serif">Atherton</div>
     </a>
   </div>
@@ -267,8 +271,9 @@
 
 <section id="contact" class="intro" style="padding-top: 4rem; padding-bottom: 8rem;">
   <h2 class="serif">Work With Emily</h2>
-  <p>Thanks, please provide more information to help serve you.</p>
-  <a href="mailto:emily@example.com" class="btn-outline">Contact Emily</a>
+  <p>Equity events, relocations, career pivots — advised discreetly, in English or Traditional Chinese.</p>
+  <a href="tel:+15109080081" class="btn-outline">(510) 908-0081</a>
+  <div style="margin-top:1.4rem;font-size:0.82rem;color:var(--gray-dark);border:1.5px dashed var(--accent);background:var(--bg-light);border-radius:2px;padding:0.85rem 1.1rem;max-width:34rem;margin-left:auto;margin-right:auto">[TODO: source needed] — confirm preferred email / scheduling link before this goes live.</div>
 </section>
 
 <footer>
