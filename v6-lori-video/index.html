@@ -1,367 +1,743 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>document.documentElement.className+=" js";</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Emily Chen | Real Estate Advisor</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap">
+<title>Emily Chen | Silicon Valley Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap">
 <style>
-  :root {
-    --white: #FBF7EF;
-    --black: #15130F;
-    --gray-dark: #6C675B;
-    --gray-light: #B8B0A3;
-    --bg-light: #201D17;
-    --bg-accent: #15130F;
-    --border: #3A352A;
-    --accent: #C9A36B; /* Bright bronze */
+  :root{
+    --paper:#FFFFFF;
+    --ink:#131211;          /* matte black-charcoal for type */
+    --ink-soft:#3A3733;
+    --grey:#6E6A64;         /* secondary text */
+    --line:#E5E2DC;         /* hairline dividers */
+    --wash:#F7F6F3;         /* faint neutral section wash */
+    --dark:#1A1917;         /* footer */
+    --dark-soft:#2A2825;
+    --dark-text:#D9D5CD;
+    --accent:#8C7A5E;       /* restrained warm metallic, used sparingly */
   }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--black); color: var(--white);
-    font-family: "Inter", sans-serif; font-size: 16px; line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden; /* Prevent horizontal wobble */
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Inter","Helvetica Neue",Arial,sans-serif;
+    font-weight:300;line-height:1.7;font-size:16px;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
-  a { color: inherit; text-decoration: none; }
-  .serif { font-family: "Fraunces", Georgia, serif; font-weight: 400; }
-  
-  .wrap { max-width: 76rem; margin: 0 auto; padding: 0 2rem; }
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%}
+  .serif{font-family:"Playfair Display",Georgia,serif;font-weight:400}
+  .wrap{max-width:78rem;margin:0 auto;padding:0 2.5rem}
+  @media(max-width:48rem){.wrap{padding:0 1.5rem}}
 
-  /* Topbar & Header (Lori Style) */
-  header.main { position: absolute; top: 0; left: 0; right: 0; z-index: 4; padding-top: 2rem; }
-  header.main .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-  
-  .menu-toggle {
-    display: flex; align-items: center; gap: 0.8rem; background: none; border: 0; color: var(--white);
-    font: inherit; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 0.4rem 0;
+  .eyebrow{
+    font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--accent);font-weight:500;
   }
-  .menu-toggle .bars { display: inline-flex; flex-direction: column; gap: 5px; }
-  .menu-toggle .bars span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: background 0.3s; }
-  .menu-toggle:hover .bars span { background: var(--accent); }
-  .menu-toggle:hover { color: var(--accent); }
-  
-  .brandmark { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; letter-spacing: 0.15em; color: var(--white); text-align: center; text-transform: uppercase; }
-  
-  .navlinks { display: flex; gap: 2rem; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); }
-  .navlinks a { transition: opacity 0.3s; }
-  .navlinks a:hover { opacity: 0.7; }
-  @media(max-width:64rem){ .navlinks { display: none; } }
+  h2.section-title{
+    font-family:"Playfair Display",Georgia,serif;font-weight:400;
+    font-size:clamp(1.9rem,4vw,3rem);line-height:1.15;letter-spacing:.02em;
+    margin:.7rem 0 1.4rem;text-wrap:balance;
+  }
+  .lede{color:var(--grey);max-width:60ch;font-size:1.02rem}
 
-  /* Full Screen Overlay Menu */
-  body.menu-open { overflow: hidden; }
-  .menu-overlay {
-    position: fixed; inset: 0; z-index: 10; color: var(--white);
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(21, 19, 15, 0.85); /* Dark background */
-    -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px);
-    opacity: 0; transform: scale(1.03); pointer-events: none;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+  .btn{
+    display:inline-block;padding:1rem 2.8rem;border:1px solid var(--ink);
+    font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;font-weight:500;
+    transition:background .35s ease,color .35s ease,border-color .35s ease;
   }
-  .menu-overlay.open { opacity: 1; transform: scale(1); pointer-events: auto; }
-  .menu-overlay .close {
-    position: absolute; top: 2.5rem; right: 2.5rem; background: none; border: 0; color: var(--white);
-    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn.light{border-color:rgba(255,255,255,.85);color:#fff}
+  .btn.light:hover{background:#fff;color:var(--ink)}
+  .textlink{
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+    border-bottom:1px solid var(--accent);padding-bottom:.25rem;display:inline-block;
+    transition:opacity .3s ease;
   }
-  .menu-overlay ul { list-style: none; margin: 0; padding: 0; text-align: center; }
-  .menu-overlay li {
-    margin: 1rem 0; opacity: 0; transform: translateY(10px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  .menu-overlay.open li { opacity: 1; transform: translateY(0); }
-  .menu-overlay.open li:nth-child(1) { transition-delay: 0.05s; }
-  .menu-overlay.open li:nth-child(2) { transition-delay: 0.1s; }
-  .menu-overlay.open li:nth-child(3) { transition-delay: 0.15s; }
-  .menu-overlay.open li:nth-child(4) { transition-delay: 0.2s; }
-  .menu-overlay.open li:nth-child(5) { transition-delay: 0.25s; }
-  .menu-overlay a {
-    color: var(--white); font-family: "Fraunces", Georgia, serif;
-    font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; font-style: italic;
-    transition: color 0.3s ease;
-  }
-  .menu-overlay a:hover { color: var(--accent); }
-
-  /* Hero */
-  .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--black); }
-  .hero-video-wrapper { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
-  .hero-video-wrapper iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); opacity: 0.7; }
-  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 0 1rem; }
-  .hero h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); margin: 0; font-weight: 400; letter-spacing: 0.05em; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-  
-  .scroll-indicator {
-    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-    z-index: 2; color: var(--white); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+  .textlink:hover{opacity:.6}
+  a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+    outline:2px solid var(--accent);outline-offset:3px
   }
 
-  /* Intro Section */
-  .intro { padding: 8rem 2rem; text-align: center; max-width: 900px; margin: 0 auto; }
-  .intro h2 { font-size: 2.2rem; margin-bottom: 2rem; }
-  .intro p { font-size: 1.1rem; color: var(--gray-dark); margin-bottom: 2rem; font-weight: 300; }
-  .btn-outline {
-    display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent);
-    color: var(--black); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem;
-    transition: all 0.3s;
+  .demo-note{
+    background:var(--wash);color:var(--ink-soft);border-bottom:1px solid var(--line);
+    font-size:.72rem;letter-spacing:.04em;padding:.6rem 1.5rem;text-align:center;
   }
-  .btn-outline:hover { background: var(--bg-accent); border-color: var(--bg-accent); }
+  .demo-note strong{font-weight:600}
 
-  /* Properties Grid */
-  .properties {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-    gap: 2.5rem; padding: 0 2rem 4rem; max-width: 76rem; margin: 0 auto;
+  /* ---------- Sticky navigation ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);
+    -webkit-backdrop-filter:saturate(160%) blur(12px);backdrop-filter:saturate(160%) blur(12px);
+    border-bottom:1px solid var(--line);
   }
-  .prop-card { position: relative; }
-  .prop-image { aspect-ratio: 16/9; background-color: #eee; background-size: cover; background-position: center; }
-  .prop-info {
-    background: var(--white); padding: 1.5rem 0 0;
+  .nav .wrap{
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+    gap:1.5rem;padding-top:1.15rem;padding-bottom:1.15rem;
   }
-  .prop-info h3 { margin: 0 0 0.5rem; font-size: 1.5rem; }
-  .prop-info .price { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
-  .prop-info .specs { display: flex; gap: 1rem; color: var(--gray-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
-  .prop-source-note {
-    grid-column: 1/-1; margin-top: -1.5rem; font-size: 0.82rem; color: var(--gray-dark);
-    border: 1.5px dashed var(--accent); background: var(--bg-light); border-radius: 2px;
-    padding: 0.85rem 1.1rem; max-width: 44rem;
+  .nav .logo{
+    font-family:"Playfair Display",Georgia,serif;font-size:1.15rem;
+    letter-spacing:.24em;text-transform:uppercase;white-space:nowrap;
   }
-  .btn-solid {
-    display: inline-block; padding: 0.8rem 2rem; background: var(--accent); color: var(--white);
-    text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem;
-    transition: opacity 0.3s;
+  @media(max-width:30rem){.nav .logo{font-size:.95rem;letter-spacing:.16em}}
+  .nav .menu{
+    display:flex;gap:2.2rem;justify-content:center;
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;color:var(--ink-soft);
   }
-  .btn-solid:hover { opacity: 0.8; }
-
-  /* Testimonials Slider */
-  .testimonials { background: var(--bg-light); padding: 8rem 2rem; text-align: center; }
-  .testimonial-wrap { max-width: 800px; margin: 0 auto; overflow: hidden; }
-  .testimonial-wrap h2 { font-size: 2.2rem; margin-bottom: 3rem; }
-  .testimonial-slider { display: flex; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-  .test-slide { min-width: 100%; box-sizing: border-box; padding: 0 1rem; }
-  .quote { font-size: 1.5rem; line-height: 1.4; font-style: italic; margin-bottom: 2rem; }
-  .author { font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-light); }
-
-  /* Neighborhoods Slider */
-  .neighborhoods { padding: 8rem 0; overflow: hidden; }
-  .neighborhoods h2 { font-size: 2.2rem; text-align: center; margin-bottom: 4rem; }
-  .neighborhood-wrap { width: 100%; overflow: hidden; padding: 0 2rem; box-sizing: border-box; }
-  .neighborhood-slider { display: flex; gap: 1.5rem; transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1); }
-  .hood-card { flex: 0 0 calc(33.333% - 1rem); min-width: 300px; position: relative; aspect-ratio: 1/1; background-size: cover; background-position: center; }
-  .hood-card::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.2); transition: background 0.3s; }
-  .hood-card:hover::after { background: rgba(0,0,0,0.4); }
-  .hood-label {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: var(--white); font-size: 1.8rem; z-index: 2; pointer-events: none; text-align: center; width: 100%;
+  .nav .menu a{transition:color .3s ease}
+  .nav .menu a:hover{color:var(--accent)}
+  .nav .tel{
+    justify-self:end;font-size:.72rem;letter-spacing:.14em;font-weight:500;white-space:nowrap;
+  }
+  .hamburger{
+    display:none;background:none;border:0;padding:.4rem;cursor:pointer;
+    flex-direction:column;gap:4px;
+  }
+  .hamburger span{display:block;width:22px;height:1.5px;background:var(--ink)}
+  @media(max-width:62rem){
+    .nav .wrap{grid-template-columns:auto 1fr auto}
+    .nav .menu{display:none}
+    .hamburger{display:flex}
+    .nav .logo{justify-self:center}
   }
 
-  /* Ambient Video Section */
-  .ambient-video-section { position: relative; height: 70vh; overflow: hidden; background: var(--black); margin: 4rem 0; display: flex; align-items: center; justify-content: center; }
-  .ambient-overlay { position: relative; z-index: 2; text-align: center; color: var(--white); pointer-events: none; }
-  .ambient-overlay h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; font-weight: 300; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-  .ambient-overlay p { font-size: 1.1rem; letter-spacing: 0.05em; opacity: 0.8; margin-top: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+  /* ---------- Mobile overlay menu ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:60;background:rgba(255,255,255,.97);
+    -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;transition:opacity .4s ease;
+  }
+  .overlay.open{opacity:1;pointer-events:auto}
+  .overlay .close{
+    position:absolute;top:1.6rem;right:1.6rem;background:none;border:0;cursor:pointer;
+    font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+  }
+  .overlay ul{list-style:none;margin:0;padding:0;text-align:center}
+  .overlay li{margin:1.1rem 0;opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease}
+  .overlay.open li{opacity:1;transform:none}
+  .overlay.open li:nth-child(1){transition-delay:.06s}
+  .overlay.open li:nth-child(2){transition-delay:.11s}
+  .overlay.open li:nth-child(3){transition-delay:.16s}
+  .overlay.open li:nth-child(4){transition-delay:.21s}
+  .overlay.open li:nth-child(5){transition-delay:.26s}
+  .overlay.open li:nth-child(6){transition-delay:.31s}
+  .overlay a{font-family:"Playfair Display",Georgia,serif;font-size:clamp(1.6rem,6vw,2.4rem)}
+  body.locked{overflow:hidden}
 
-  /* Lead Capture */
-  .lead-capture { display: flex; max-width: 500px; margin: 2rem auto 0; border: 1px solid var(--border); background: var(--bg-light); }
-  .lead-capture input { flex: 1; background: transparent; border: 0; color: var(--white); padding: 1rem 1.5rem; outline: none; font-family: "Inter", sans-serif; font-size: 0.9rem; }
-  .lead-capture button { background: var(--accent); color: var(--white); border: 0; padding: 0 2rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; cursor: pointer; transition: opacity 0.3s; }
-  .lead-capture button:hover { opacity: 0.8; }
-
-  /* Footer */
-  footer { background: var(--bg-accent); color: var(--black); padding: 4rem 3rem; text-align: center; font-size: 0.85rem; }
-  .footer-logo { font-size: 1.5rem; margin-bottom: 2rem; }
-  .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; opacity: 0.7; }
-
-  /* Mobile Responsive Fixes */
-  @media(max-width: 48rem) {
-    .intro, .testimonials, .neighborhoods { padding: 4rem 1.5rem; }
-    .properties { padding: 0 1.5rem 3rem; gap: 2rem; }
-    .quote { font-size: 1.25rem; }
+  /* ---------- Hero ---------- */
+  .hero{position:relative;height:92vh;min-height:34rem;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;text-align:center;color:#fff}
+  .hero .media{position:absolute;inset:0;overflow:hidden;background:#111}
+  /* Each layer is a cinematic still that slowly drifts (ambient loop stand-in). */
+  .hero .layer{
+    position:absolute;inset:-6%;             /* bleed so the drift never shows an edge */
+    background-size:cover;background-position:center;
+    opacity:0;transition:opacity 2s ease;
+    will-change:transform,opacity;
+  }
+  .hero .layer.active{opacity:1;animation:drift 22s ease-in-out infinite alternate}
+  .hero video.bgvideo{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  @keyframes drift{
+    from{transform:scale(1.04) translate3d(0,0,0)}
+    to{transform:scale(1.14) translate3d(-1.5%,-1.5%,0)}
+  }
+  /* Two-part scrim: a vertical wash for the whole frame plus a centred pool
+     behind the copy, so type stays legible over bright interior footage. */
+  .hero .scrim{position:absolute;inset:0;
+    background:
+      radial-gradient(58% 46% at 50% 52%,rgba(12,11,10,.52) 0%,rgba(12,11,10,0) 72%),
+      linear-gradient(180deg,rgba(15,14,13,.5) 0%,rgba(15,14,13,.34) 45%,rgba(15,14,13,.72) 100%)}
+  .hero .inner{position:relative;z-index:2;padding:0 1.5rem;max-width:46rem}
+  .hero h1{
+    font-family:"Playfair Display",Georgia,serif;font-weight:400;
+    font-size:clamp(2.7rem,8vw,5.4rem);line-height:1.04;letter-spacing:.06em;
+    margin:0 0 1.1rem;text-wrap:balance;text-shadow:0 2px 30px rgba(10,9,8,.42);
+  }
+  .hero .tagline{
+    font-size:clamp(.95rem,1.6vw,1.08rem);font-weight:300;letter-spacing:.02em;
+    color:rgba(255,255,255,.96);max-width:40ch;margin:0 auto 2rem;
+    text-shadow:0 1px 18px rgba(10,9,8,.5);
+  }
+  .hero .dre{margin-top:1.6rem;font-size:.68rem;letter-spacing:.2em;
+    text-transform:uppercase;color:rgba(255,255,255,.72)}
+  .hero .dots{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
+    z-index:3;display:flex;gap:.55rem}
+  .hero .dots button{
+    width:7px;height:7px;border-radius:50%;padding:0;cursor:pointer;
+    border:1px solid rgba(255,255,255,.75);background:transparent;transition:background .3s ease;
+  }
+  .hero .dots button.active{background:#fff}
+  .medianote{
+    position:absolute;top:.9rem;right:1rem;z-index:3;font-size:.56rem;letter-spacing:.16em;
+    text-transform:uppercase;color:rgba(255,255,255,.62);
   }
 
-  .demo-note{background:#F2E9D8;color:#7C5F37;font-size:.72rem;letter-spacing:.06em;padding:.55rem 2rem;text-align:center}
+  /* ---------- Reveal on scroll ----------
+     Gated on .js so the page is fully readable if scripting fails or is blocked;
+     the hidden state is only ever applied when JS is present to undo it. */
+  .js .reveal{opacity:0;transform:translateY(22px);
+    transition:opacity .9s cubic-bezier(.22,.61,.36,1),transform .9s cubic-bezier(.22,.61,.36,1)}
+  .js .reveal.in{opacity:1;transform:none}
+
+  section{padding:6.5rem 0}
+  @media(max-width:48rem){section{padding:4.25rem 0}}
+
+  /* ---------- Biography ---------- */
+  .bio .grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center}
+  @media(max-width:56rem){.bio .grid{grid-template-columns:1fr;gap:2.5rem}}
+  .bio .portrait{position:relative;aspect-ratio:4/5;background:var(--wash);overflow:hidden}
+  .bio .portrait img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+  .bio .portrait .tag{
+    position:absolute;left:0;bottom:0;background:rgba(19,18,17,.72);color:#fff;
+    font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;padding:.4rem .7rem;
+  }
+  .bio h3{
+    font-family:"Playfair Display",Georgia,serif;font-weight:400;font-size:1.5rem;
+    letter-spacing:.01em;margin:2rem 0 .6rem;
+  }
+  .bio p{color:var(--grey);max-width:56ch}
+  .bio .creds{
+    display:grid;grid-template-columns:max-content 1fr;gap:.45rem 1.6rem;
+    margin:2rem 0 2.2rem;font-size:.88rem;
+  }
+  .bio .creds dt{
+    font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;align-self:baseline;padding-top:.25rem;
+  }
+  .bio .creds dd{margin:0;color:var(--ink-soft)}
+  @media(max-width:34rem){.bio .creds{grid-template-columns:1fr;gap:.15rem}
+    .bio .creds dt{margin-top:.8rem}}
+
+  /* ---------- Listing grid ---------- */
+  .listings{background:var(--wash)}
+  .listings .head{display:flex;justify-content:space-between;align-items:flex-end;
+    gap:1.5rem;flex-wrap:wrap;margin-bottom:2.6rem}
+  .grid-listings{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:2.5rem}
+  .listing{background:var(--paper);border:1px solid var(--line)}
+  .listing .thumb{position:relative;aspect-ratio:4/3;overflow:hidden;background:#ddd}
+  .listing .thumb img{width:100%;height:100%;object-fit:cover;
+    transition:transform 1.1s cubic-bezier(.22,.61,.36,1)}
+  .listing:hover .thumb img{transform:scale(1.06)}
+  .listing .thumb .tag{
+    position:absolute;top:.7rem;left:.7rem;background:rgba(19,18,17,.66);color:#fff;
+    font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;padding:.3rem .6rem;
+  }
+  .listing .body{padding:1.5rem 1.6rem 1.8rem}
+  .listing .addr{
+    font-family:"Playfair Display",Georgia,serif;font-size:1.28rem;font-weight:500;
+    line-height:1.3;margin:0 0 .35rem;
+  }
+  .listing .city{font-size:.83rem;color:var(--grey);margin-bottom:1rem}
+  .listing .price{
+    font-family:"Playfair Display",Georgia,serif;font-size:1.35rem;color:var(--accent);
+    font-variant-numeric:tabular-nums;margin-bottom:.9rem;
+  }
+  .listing .metrics{
+    display:flex;gap:1.3rem;flex-wrap:wrap;font-size:.76rem;color:var(--grey);
+    letter-spacing:.04em;padding-bottom:1.2rem;border-bottom:1px solid var(--line);margin-bottom:1.2rem;
+    font-variant-numeric:tabular-nums;
+  }
+  .sourcenote{
+    grid-column:1/-1;font-size:.82rem;color:var(--ink-soft);line-height:1.6;
+    border:1.5px dashed var(--accent);background:var(--paper);padding:1rem 1.2rem;max-width:48rem;
+  }
+  .sourcenote strong{
+    display:block;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:.35rem;font-weight:600;
+  }
+
+  /* ---------- Testimonial slider ---------- */
+  .testimonials{text-align:center;overflow:hidden}
+  .slider{position:relative;max-width:46rem;margin:2.5rem auto 0;min-height:15rem}
+  .slide-q{
+    position:absolute;inset:0;opacity:0;transform:translateX(28px);
+    transition:opacity .8s ease,transform .8s ease;pointer-events:none;
+  }
+  .slide-q.active{opacity:1;transform:none;pointer-events:auto;position:relative}
+  .slide-q .mark{
+    font-family:"Playfair Display",Georgia,serif;font-size:3.2rem;line-height:1;
+    color:var(--accent);opacity:.5;display:block;margin-bottom:.4rem;
+  }
+  .slide-q .quote{
+    font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:400;
+    font-size:clamp(1.15rem,2.4vw,1.6rem);line-height:1.5;color:var(--ink);
+    max-width:38ch;margin:0 auto 1.4rem;text-wrap:balance;
+  }
+  .slide-q .who{
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--grey);font-weight:500;
+  }
+  .slide-q.placeholder .quote{
+    font-style:normal;font-family:"Inter",Arial,sans-serif;font-size:.95rem;
+    color:var(--ink-soft);border:1.5px dashed var(--accent);padding:1.4rem 1.6rem;
+    max-width:34rem;text-align:left;line-height:1.65;
+  }
+  .slide-q.placeholder .quote b{
+    display:block;font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:.4rem;font-weight:600;
+  }
+  .slider-dots{display:flex;gap:.5rem;justify-content:center;margin-top:2rem}
+  .slider-dots button{
+    width:7px;height:7px;border-radius:50%;padding:0;cursor:pointer;
+    border:1px solid var(--accent);background:transparent;transition:background .3s ease;
+  }
+  .slider-dots button.active{background:var(--accent)}
+
+  /* ---------- Neighborhood panels (ambient motion) ---------- */
+  .hoods{background:var(--wash)}
+  .grid-hoods{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.5rem;margin-top:2.6rem}
+  .hood{
+    position:relative;aspect-ratio:3/4;overflow:hidden;background:#222;display:block;
+  }
+  .hood .motion{
+    position:absolute;inset:-5%;width:110%;height:110%;object-fit:cover;
+    transform:scale(1);transition:transform 1.4s cubic-bezier(.22,.61,.36,1);
+    will-change:transform;
+  }
+  /* Ambient loop: begins drifting when scrolled into view, deepens on hover. */
+  .hood.in .motion{animation:hoodDrift 18s ease-in-out infinite alternate}
+  .hood:hover .motion,.hood:focus-visible .motion{transform:scale(1.09)}
+  @keyframes hoodDrift{
+    from{transform:scale(1.02) translate3d(0,0,0)}
+    to{transform:scale(1.1) translate3d(-2%,-1%,0)}
+  }
+  .hood .veil{position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(15,14,13,.12) 40%,rgba(15,14,13,.72) 100%);
+    transition:background .5s ease}
+  .hood:hover .veil{background:linear-gradient(180deg,rgba(15,14,13,.25) 30%,rgba(15,14,13,.8) 100%)}
+  .hood .label{
+    position:absolute;left:0;right:0;bottom:0;padding:1.5rem 1.4rem;color:#fff;z-index:2;
+  }
+  .hood .label .name{
+    font-family:"Playfair Display",Georgia,serif;font-size:1.5rem;letter-spacing:.03em;display:block;
+  }
+  .hood .label .meta{
+    font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(255,255,255,.75);margin-top:.3rem;display:block;
+  }
+  .hood .livetag{
+    position:absolute;top:.7rem;left:.7rem;z-index:2;background:rgba(19,18,17,.6);color:#fff;
+    font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;padding:.28rem .55rem;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--dark);color:var(--dark-text);padding:5rem 0 2.5rem}
+  footer .cols{
+    display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:3.5rem;
+    padding-bottom:3rem;border-bottom:1px solid var(--dark-soft);
+  }
+  @media(max-width:60rem){footer .cols{grid-template-columns:1fr;gap:2.75rem}}
+  footer h4{
+    font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:#fff;
+    margin:0 0 1.3rem;font-weight:600;
+  }
+  footer .flogo{
+    font-family:"Playfair Display",Georgia,serif;font-size:1.3rem;letter-spacing:.22em;
+    text-transform:uppercase;color:#fff;margin-bottom:1rem;
+  }
+  footer p{margin:.2rem 0;font-size:.85rem;color:var(--dark-text);opacity:.85}
+  footer .sitemap{display:flex;flex-direction:column;gap:.6rem;font-size:.85rem}
+  footer .sitemap a{opacity:.85;transition:opacity .3s ease}
+  footer .sitemap a:hover{opacity:1;color:#fff}
+
+  .field{margin-bottom:.9rem}
+  .field input,.field textarea{
+    width:100%;background:transparent;border:0;border-bottom:1px solid #453F38;
+    color:#fff;font:inherit;font-size:.88rem;padding:.6rem 0;
+  }
+  .field textarea{resize:vertical;min-height:3.4rem}
+  .field input::placeholder,.field textarea::placeholder{color:#8A837A}
+  .field input:focus,.field textarea:focus{border-bottom-color:var(--accent);outline:none}
+  .consent{
+    display:flex;gap:.6rem;align-items:flex-start;margin:1rem 0 1.2rem;
+    font-size:.7rem;line-height:1.55;color:#9A9289;
+  }
+  .consent input{margin-top:.25rem;accent-color:var(--accent);flex:none}
+  .fbtn{
+    background:transparent;border:1px solid #5A5249;color:#fff;font:inherit;
+    font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;padding:.85rem 2.2rem;
+    cursor:pointer;transition:background .35s ease,color .35s ease,border-color .35s ease;
+  }
+  .fbtn:hover{background:#fff;color:var(--dark);border-color:#fff}
+  .formnote{
+    margin-top:1rem;font-size:.68rem;color:#9A9289;border:1px dashed #4A443C;padding:.6rem .8rem;
+  }
+  .legal{
+    display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+    padding-top:1.8rem;font-size:.7rem;color:#8A837A;letter-spacing:.06em;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .js .reveal{opacity:1;transform:none;transition:none}
+    .hero .layer.active,.hood.in .motion{animation:none}
+    .listing .thumb img,.hood .motion{transition:none}
+  }
 </style>
 </head>
 <body>
 
-<div class="demo-note">STYLE STUDY V6 — pure Lori structure with original stark dark palette and video hero. Stock photography; property specs and testimonial are marked TODO — Emily has no public transaction data or approved quotes to draw from.</div>
-
-<header class="main">
-  <div class="wrap">
-    <button class="menu-toggle" id="menu-open" aria-haspopup="true" aria-controls="menu-overlay">
-      <span class="bars"><span></span><span></span><span></span></span> Menu
-    </button>
-    <span class="brandmark">Emily Chen</span>
-    <div class="navlinks"><a href="#about">Meet Emily</a><a href="#contact">Contact</a></div>
-  </div>
-</header>
-
-<div class="hero" id="hero-video">
-  <div class="hero-video-wrapper">
-    <!-- Placeholder video of a luxury home using YouTube -->
-    <iframe src="https://www.youtube.com/embed/Pj15P5oJomQ?autoplay=1&mute=1&loop=1&playlist=Pj15P5oJomQ&controls=0&showinfo=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
-  </div>
-
-  <div class="hero-content">
-    <h1 class="serif">Emily Chen</h1>
-  </div>
-  <div class="scroll-indicator">Scroll</div>
+<div class="demo-note">
+  <strong>STYLE STUDY V6</strong> — premium editorial direction with ambient motion, modelled on the luxury agent-site format. Stock photography; prices, metrics and testimonials are marked <strong>TODO</strong> — Emily has no public transaction data or approved quotes yet.
 </div>
 
-<section id="about" class="intro">
-  <h2 class="serif">Meet Emily Chen</h2>
-  <p>In a real estate market where many focus solely on transaction volume, Emily takes a profoundly different approach. Operating at the intersection of real estate strategy, executive coaching, and investment thinking, she provides a highly personalized advisory service tailored for Silicon Valley's founders and executives.</p>
-  <p>With an Executive MBA from UCLA Anderson and strategic experience across the US, Taiwan, China, and Japan, Emily advises clients through major life transitions—whether an equity event, relocation, or career pivot—ensuring the optimal outcome for their portfolios and their lives.</p>
-  <a href="#contact" class="btn-outline">Let's Connect</a>
-</section>
-
-<section id="portfolio" style="padding-top: 4rem;">
-  <div class="properties">
-    <div class="prop-card">
-      <div class="prop-image" style="background-image: url('assets/prop1.jpg');"></div>
-      <div class="prop-info">
-        <h3 class="serif">Ipsum Dolor Lane</h3>
-        <div class="price">Palo Alto, CA</div>
-        <div class="specs">
-          <span>— Beds</span>
-          <span>— Baths</span>
-          <span>—,——— Sq.Ft.</span>
-        </div>
-        <a href="#" class="btn-solid">View Listing</a>
-      </div>
+<!-- ================= NAVIGATION ================= -->
+<nav class="nav">
+  <div class="wrap">
+    <button class="hamburger" id="nav-open" aria-label="Open menu" aria-haspopup="true" aria-controls="overlay">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#top" class="logo">Emily Chen</a>
+    <div class="menu">
+      <a href="#about">Meet Emily</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#communities">Communities</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
     </div>
-    <div class="prop-card">
-      <div class="prop-image" style="background-image: url('assets/prop2.jpg');"></div>
-      <div class="prop-info">
-        <h3 class="serif">Amet Consect Court</h3>
-        <div class="price">Atherton, CA</div>
-        <div class="specs">
-          <span>— Beds</span>
-          <span>— Baths</span>
-          <span>—,——— Sq.Ft.</span>
-        </div>
-        <a href="#" class="btn-solid">View Listing</a>
-      </div>
-    </div>
-    <div class="prop-source-note"><strong>[TODO: source needed]</strong> — Emily's actual represented properties, prices, and specs. No transaction data is publicly available on her Compass profile; this section is structural placeholder only, not a claim of past sales.</div>
+    <a class="tel" href="tel:+15109080081">(510)&nbsp;908-0081</a>
   </div>
-</section>
+</nav>
 
-<section id="testimonials" class="testimonials">
-  <div class="testimonial-wrap">
-    <h2 class="serif">Testimonials</h2>
-    <div class="testimonial-slider">
-      <div class="test-slide">
-        <div class="quote serif">"Emily is more than an agent. She fundamentally understood the complexity of our equity situation and guided us through a major transition with clarity and strategic vision."</div>
-        <div class="author">Executive Client, Palo Alto</div>
-      </div>
-      <div class="test-slide">
-        <div class="quote serif">"Her approach is entirely different. She brings the discipline of a board advisor to what is usually a highly emotional transaction."</div>
-        <div class="author">Founder, Menlo Park</div>
-      </div>
-      <div class="test-slide">
-        <div class="quote serif">"An exceptional partner who secured not just a property, but optimized our entire portfolio strategy in the process."</div>
-        <div class="author">Tech Executive, Atherton</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="neighborhoods" id="communities">
-  <h2 class="serif">Neighborhoods</h2>
-  <div class="neighborhood-wrap">
-    <div class="neighborhood-slider">
-      <a href="#" class="hood-card" style="background-image:url('assets/hood1.jpg');">
-        <div class="hood-label serif">Palo Alto</div>
-      </a>
-      <a href="#" class="hood-card" style="background-image: url('assets/hood2.jpg');">
-        <div class="hood-label serif">Menlo Park</div>
-      </a>
-      <a href="#" class="hood-card" style="background-image: url('assets/hood3.jpg');">
-        <div class="hood-label serif">Atherton</div>
-      </a>
-      <a href="#" class="hood-card" style="background-image: url('assets/hood1.jpg');">
-        <div class="hood-label serif">Los Altos</div>
-      </a>
-      <a href="#" class="hood-card" style="background-image: url('assets/hood2.jpg');">
-        <div class="hood-label serif">Woodside</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="ambient-video-section">
-  <div class="hero-video-wrapper" style="opacity: 0.5;">
-    <iframe src="https://www.youtube.com/embed/g20t_K9dlhA?autoplay=1&mute=1&loop=1&playlist=g20t_K9dlhA&controls=0&showinfo=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
-  </div>
-  <div class="ambient-overlay">
-    <h2 class="serif">The Lifestyle</h2>
-    <p>A cinematic perspective on Silicon Valley living</p>
-  </div>
-</section>
-
-<section id="contact" class="intro" style="padding-top: 4rem; padding-bottom: 8rem;">
-  <h2 class="serif">Private Advisory</h2>
-  <p>Equity events, relocations, career pivots — advised discreetly, in English or Traditional Chinese.</p>
-  <form class="lead-capture" onsubmit="event.preventDefault();">
-    <input type="email" placeholder="Enter your email for a private consultation" required>
-    <button type="submit" class="serif">Inquire</button>
-  </form>
-</section>
-
-<footer>
-  <div class="footer-logo serif">Emily Chen</div>
-  <div class="footer-links">
-    <a href="#">Compass</a>
-    <a href="#">CA DRE #01870054</a>
-    <a href="#">(510) 908-0081</a>
-  </div>
-  <div style="opacity: 0.5; margin-top: 2rem;">
-    &copy; 2026 Emily Chen. All Rights Reserved.
-  </div>
-</footer>
-
-<div class="menu-overlay" id="menu-overlay">
-  <button class="close" id="menu-close" aria-label="Close menu">Close ✕</button>
+<div class="overlay" id="overlay">
+  <button class="close" id="nav-close" aria-label="Close menu">Close &#10005;</button>
   <ul>
-    <li><a href="#hero">Home</a></li>
+    <li><a href="#top">Home</a></li>
     <li><a href="#about">Meet Emily</a></li>
-    <li><a href="#portfolio">Properties</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#communities">Communities</a></li>
     <li><a href="#testimonials">Testimonials</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 </div>
 
-  <script>
-    (function(){
-      var open = document.getElementById('menu-open'), close = document.getElementById('menu-close'),
-          overlay = document.getElementById('menu-overlay');
-      function openMenu(){ overlay.classList.add('open'); document.body.classList.add('menu-open'); }
-      function closeMenu(){ overlay.classList.remove('open'); document.body.classList.remove('menu-open'); }
-      if(open) open.addEventListener('click', openMenu);
-      if(close) close.addEventListener('click', closeMenu);
-      overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
-      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
-  
-      // Testimonial Slider
-      var testSlider = document.querySelector('.testimonial-slider');
-      if (testSlider) {
-        var tSlides = testSlider.querySelectorAll('.test-slide'), tIndex = 0;
-        setInterval(function(){
-          tIndex = (tIndex + 1) % tSlides.length;
-          testSlider.style.transform = 'translateX(-' + (tIndex * 100) + '%)';
-        }, 5000);
-      }
-  
-      // Neighborhoods Slider
-      var hoodSlider = document.querySelector('.neighborhood-slider');
-      if (hoodSlider) {
-        var hCards = hoodSlider.querySelectorAll('.hood-card'), hIndex = 0;
-        setInterval(function(){
-          hIndex = (hIndex + 1) % (hCards.length - 2); // Show 3 at a time usually
-          // Calculate offset based on card width (33.333%)
-          hoodSlider.style.transform = 'translateX(calc(-' + (hIndex * 33.333) + '% - ' + (hIndex * 1.5) + 'rem))';
-        }, 4000);
-      }
-    })();
-  </script>
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <span class="medianote">Ambient placeholder — see video note</span>
+  <div class="media" id="hero-media">
+    <!--
+      PRODUCTION SWAP: drop a compressed, muted H.264 loop in here and it takes over:
+      <video class="bgvideo" autoplay muted loop playsinline preload="auto"
+             poster="assets/slide1.jpg"><source src="assets/hero-loop.mp4" type="video/mp4"></video>
+      Until licensed footage is chosen, these layers provide the same slow cinematic drift.
+    -->
+    <div class="layer active" style="background-image:url('assets/slide1.jpg')"></div>
+    <div class="layer" style="background-image:url('assets/slide2.jpg')"></div>
+    <div class="layer" style="background-image:url('assets/slide3.jpg')"></div>
+    <div class="layer" style="background-image:url('assets/slide4.jpg')"></div>
+    <div class="layer" style="background-image:url('assets/slide5.jpg')"></div>
+  </div>
+  <div class="scrim"></div>
+
+  <div class="inner">
+    <h1 class="serif">Emily Chen</h1>
+    <p class="tagline">Fulfilling your real estate goals across Silicon Valley and the Peninsula.</p>
+    <a class="btn light" href="#contact">Let&rsquo;s Connect</a>
+    <div class="dre">Compass &middot; Palo Alto &middot; CA DRE #01870054</div>
+  </div>
+
+  <div class="dots" role="tablist" aria-label="Hero background">
+    <button class="active" data-i="0" aria-label="Background 1"></button>
+    <button data-i="1" aria-label="Background 2"></button>
+    <button data-i="2" aria-label="Background 3"></button>
+    <button data-i="3" aria-label="Background 4"></button>
+    <button data-i="4" aria-label="Background 5"></button>
+  </div>
+</header>
+
+<!-- ================= BIOGRAPHY ================= -->
+<section class="bio" id="about">
+  <div class="wrap grid">
+    <div class="portrait reveal">
+      <img src="assets/emily-headshot.jpg" alt="Emily Chen, Real Estate Advisor at Compass">
+      <span class="tag">Compass profile photo &mdash; TODO: hi-res</span>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">Meet Emily</span>
+      <h2 class="section-title">Quality over quantity.</h2>
+      <p class="lede">Many agents compete on transaction volume. Emily competes on judgment. She works at the intersection of real estate strategy, executive coaching, and investment thinking &mdash; and treats them as one conversation rather than three separate services.</p>
+      <h3 class="serif">Advisory, not order-taking.</h3>
+      <p>Her clients are founders and executives, most of them arriving at a moment that is equal parts financial and personal: an equity event, a relocation, a career pivot. The property question is rarely the first question worth asking.</p>
+      <dl class="creds">
+        <dt>Brokerage</dt><dd>Compass, Palo Alto &mdash; Real Estate Advisor since 2018</dd>
+        <dt>License</dt><dd>CA DRE #01870054 &middot; e-PRO&reg; (NAR)</dd>
+        <dt>Education</dt><dd>UCLA Anderson, Executive MBA &middot; Stanford GSB, Strategic Marketing Management</dd>
+        <dt>Advisory</dt><dd>English &amp; Traditional Chinese &middot; US &middot; Taiwan &middot; China &middot; Japan</dd>
+      </dl>
+      <a class="btn" href="#contact">Start a Conversation</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LISTING GRID ================= -->
+<section class="listings" id="portfolio">
+  <div class="wrap">
+    <div class="head reveal">
+      <div>
+        <span class="eyebrow">Portfolio</span>
+        <h2 class="section-title" style="margin-bottom:0">Representative Properties</h2>
+      </div>
+      <a class="textlink" href="#">View All</a>
+    </div>
+
+    <div class="grid-listings">
+      <article class="listing reveal">
+        <div class="thumb"><img src="assets/prop1.jpg" alt="Representative property placeholder"><span class="tag">Stock placeholder</span></div>
+        <div class="body">
+          <h3 class="addr">Ipsum Dolor Lane</h3>
+          <div class="city">Palo Alto, CA</div>
+          <div class="price">$ &mdash;,&mdash;&mdash;&mdash;,&mdash;&mdash;&mdash;</div>
+          <div class="metrics"><span>&mdash; Beds</span><span>&mdash; Baths</span><span>&mdash;,&mdash;&mdash;&mdash; Sq.Ft.</span></div>
+          <a class="textlink" href="#">View Listing</a>
+        </div>
+      </article>
+
+      <article class="listing reveal">
+        <div class="thumb"><img src="assets/prop2.jpg" alt="Representative property placeholder"><span class="tag">Stock placeholder</span></div>
+        <div class="body">
+          <h3 class="addr">Amet Consect Court</h3>
+          <div class="city">Atherton, CA</div>
+          <div class="price">$ &mdash;,&mdash;&mdash;&mdash;,&mdash;&mdash;&mdash;</div>
+          <div class="metrics"><span>&mdash; Beds</span><span>&mdash; Baths</span><span>&mdash;,&mdash;&mdash;&mdash; Sq.Ft.</span></div>
+          <a class="textlink" href="#">View Listing</a>
+        </div>
+      </article>
+
+      <article class="listing reveal">
+        <div class="thumb"><img src="assets/prop3.jpg" alt="Representative property placeholder"><span class="tag">Stock placeholder</span></div>
+        <div class="body">
+          <h3 class="addr">Tempor Incidid Avenue</h3>
+          <div class="city">Menlo Park, CA</div>
+          <div class="price">$ &mdash;,&mdash;&mdash;&mdash;,&mdash;&mdash;&mdash;</div>
+          <div class="metrics"><span>&mdash; Beds</span><span>&mdash; Baths</span><span>&mdash;,&mdash;&mdash;&mdash; Sq.Ft.</span></div>
+          <a class="textlink" href="#">View Listing</a>
+        </div>
+      </article>
+
+      <div class="sourcenote reveal">
+        <strong>[TODO: source needed]</strong>
+        Emily&rsquo;s actual represented properties, sale prices, and specifications. No transaction data is published on her Compass profile, so nothing here is a claim of past sales &mdash; the cards exist to show layout only.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIAL SLIDER ================= -->
+<section class="testimonials" id="testimonials">
+  <div class="wrap">
+    <span class="eyebrow reveal">Client Experience</span>
+    <h2 class="section-title reveal">In Their Words</h2>
+
+    <div class="slider" id="slider">
+      <div class="slide-q placeholder active">
+        <p class="quote"><b>[TODO: source needed]</b>Real client testimonial &mdash; a residential transaction. Nothing will be published here until Emily supplies and approves an actual quote. No testimonial has been written or collected.</p>
+        <div class="who">Awaiting approved quote</div>
+      </div>
+      <div class="slide-q placeholder">
+        <p class="quote"><b>[TODO: source needed]</b>Real client testimonial &mdash; an executive coaching engagement. Nothing will be published here until Emily supplies and approves an actual quote.</p>
+        <div class="who">Awaiting approved quote</div>
+      </div>
+      <div class="slide-q placeholder">
+        <p class="quote"><b>[TODO: source needed]</b>Real client testimonial &mdash; a bilingual or cross-border client. Nothing will be published here until Emily supplies and approves an actual quote.</p>
+        <div class="who">Awaiting approved quote</div>
+      </div>
+    </div>
+
+    <div class="slider-dots" id="slider-dots" role="tablist" aria-label="Testimonials">
+      <button class="active" data-i="0" aria-label="Testimonial 1"></button>
+      <button data-i="1" aria-label="Testimonial 2"></button>
+      <button data-i="2" aria-label="Testimonial 3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NEIGHBORHOODS (ambient motion) ================= -->
+<section class="hoods" id="communities">
+  <div class="wrap">
+    <span class="eyebrow reveal">Communities</span>
+    <h2 class="section-title reveal">Where Emily Works</h2>
+    <p class="lede reveal">Silicon Valley and the Peninsula, advised in English and Traditional Chinese.</p>
+
+    <div class="grid-hoods">
+      <a class="hood reveal" href="#">
+        <span class="livetag">Ambient loop</span>
+        <img class="motion" src="assets/hood1.jpg" alt="Palo Alto">
+        <span class="veil"></span>
+        <span class="label"><span class="name serif">Palo Alto</span><span class="meta">Primary market</span></span>
+      </a>
+      <a class="hood reveal" href="#">
+        <span class="livetag">Ambient loop</span>
+        <img class="motion" src="assets/hood2.jpg" alt="Menlo Park">
+        <span class="veil"></span>
+        <span class="label"><span class="name serif">Menlo Park</span><span class="meta">Peninsula</span></span>
+      </a>
+      <a class="hood reveal" href="#">
+        <span class="livetag">Ambient loop</span>
+        <img class="motion" src="assets/hood3.jpg" alt="Atherton">
+        <span class="veil"></span>
+        <span class="label"><span class="name serif">Atherton</span><span class="meta">Peninsula</span></span>
+      </a>
+      <a class="hood reveal" href="#">
+        <span class="livetag">Ambient loop</span>
+        <img class="motion" src="assets/hood4.jpg" alt="Los Altos">
+        <span class="veil"></span>
+        <span class="label"><span class="name serif">Los Altos</span><span class="meta">South Peninsula</span></span>
+      </a>
+    </div>
+
+    <div class="sourcenote reveal" style="margin-top:2rem">
+      <strong>Video note</strong>
+      These panels are built for muted, looping drone/lifestyle footage &mdash; each tile is a drop-in slot for a compressed MP4, and the slow drift you see now stands in for that motion. Licensed footage still needs to be chosen (shoot original, or license via a stock service); no third-party video has been embedded, so nothing here carries unresolved usage rights.
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div class="flogo">Emily Chen</div>
+        <p>Real Estate Advisor &middot; Business Strategic Coach</p>
+        <p>Compass</p>
+        <p>Palo Alto, California</p>
+        <p style="margin-top:1rem"><a href="tel:+15109080081">(510) 908-0081</a></p>
+        <p>CA DRE #01870054 &middot; e-PRO&reg;</p>
+        <p>English / &#32321;&#39636;&#20013;&#25991;</p>
+        <div class="formnote" style="margin-top:1.4rem">
+          [TODO] Confirm office address, email and scheduling link before launch.
+        </div>
+      </div>
+
+      <div>
+        <h4>Explore</h4>
+        <div class="sitemap">
+          <a href="#about">Meet Emily</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#communities">Communities</a>
+          <a href="#testimonials">Testimonials</a>
+          <a href="#">Market Update</a>
+          <a href="#">Journal</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Make an Inquiry</h4>
+        <form id="inquiry" novalidate>
+          <div class="field"><input type="text" name="name" placeholder="Name" autocomplete="name" required></div>
+          <div class="field"><input type="email" name="email" placeholder="Email" autocomplete="email" required></div>
+          <div class="field"><input type="tel" name="phone" placeholder="Phone" autocomplete="tel"></div>
+          <div class="field"><textarea name="message" rows="2" placeholder="How can Emily help?"></textarea></div>
+          <label class="consent">
+            <input type="checkbox" name="consent" required>
+            <span>I agree to be contacted by email and SMS about my inquiry. Message and data rates may apply; reply STOP to opt out at any time. Consent is not a condition of purchase.</span>
+          </label>
+          <button class="fbtn" type="submit">Submit</button>
+          <div class="formnote" id="formnote">Demo only &mdash; this form is not connected to a backend and sends nothing.</div>
+        </form>
+      </div>
+    </div>
+
+    <div class="legal">
+      <span>&copy; 2026 Emily Chen. All rights reserved.</span>
+      <span>Compass is a licensed real estate broker. Equal Housing Opportunity.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Mobile overlay menu ---- */
+  var overlay = document.getElementById("overlay"),
+      openBtn = document.getElementById("nav-open"),
+      closeBtn = document.getElementById("nav-close");
+  function openMenu(){ overlay.classList.add("open"); document.body.classList.add("locked"); }
+  function closeMenu(){ overlay.classList.remove("open"); document.body.classList.remove("locked"); }
+  openBtn.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", closeMenu);
+  Array.prototype.forEach.call(overlay.querySelectorAll("a"), function(a){
+    a.addEventListener("click", closeMenu);
+  });
+  document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeMenu(); });
+
+  /* ---- Hero ambient layers ---- */
+  var layers = document.querySelectorAll("#hero-media .layer"),
+      hDots  = document.querySelectorAll(".hero .dots button"),
+      hi = 0, hTimer;
+  function heroShow(n){
+    if(!layers.length) return;
+    layers[hi].classList.remove("active"); hDots[hi].classList.remove("active");
+    hi = (n + layers.length) % layers.length;
+    layers[hi].classList.add("active"); hDots[hi].classList.add("active");
+  }
+  function heroStart(){ if(!reduced) hTimer = setInterval(function(){ heroShow(hi+1); }, 6500); }
+  function heroStop(){ clearInterval(hTimer); }
+  Array.prototype.forEach.call(hDots, function(d){
+    d.addEventListener("click", function(){ heroStop(); heroShow(+d.dataset.i); heroStart(); });
+  });
+  heroStart();
+
+  /* ---- Testimonial slider ---- */
+  var quotes = document.querySelectorAll("#slider .slide-q"),
+      qDots  = document.querySelectorAll("#slider-dots button"),
+      qi = 0, qTimer;
+  function qShow(n){
+    if(!quotes.length) return;
+    quotes[qi].classList.remove("active"); qDots[qi].classList.remove("active");
+    qi = (n + quotes.length) % quotes.length;
+    quotes[qi].classList.add("active"); qDots[qi].classList.add("active");
+  }
+  function qStart(){ if(!reduced) qTimer = setInterval(function(){ qShow(qi+1); }, 7000); }
+  function qStop(){ clearInterval(qTimer); }
+  Array.prototype.forEach.call(qDots, function(d){
+    d.addEventListener("click", function(){ qStop(); qShow(+d.dataset.i); qStart(); });
+  });
+  qStart();
+
+  /* ---- Reveal on scroll + start neighborhood ambient drift in view ---- */
+  var revealables = document.querySelectorAll(".reveal");
+  function revealAll(){
+    Array.prototype.forEach.call(revealables, function(el){ el.classList.add("in"); });
+  }
+  if("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add("in");
+          io.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.12 });
+    Array.prototype.forEach.call(revealables, function(el){ io.observe(el); });
+
+    /* Safety net: an observer that never fires (background tab, prerender,
+       odd embed context) must not leave the page permanently blank. */
+    setTimeout(function(){
+      var stuck = document.querySelectorAll(".reveal:not(.in)");
+      if(stuck.length === revealables.length) revealAll();
+    }, 2500);
+  } else {
+    revealAll();
+  }
+
+  /* ---- Inquiry form (demo only) ---- */
+  var form = document.getElementById("inquiry"), note = document.getElementById("formnote");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    note.textContent = "Demo only — nothing was sent. Connect a form handler before launch.";
+  });
+})();
+</script>
 
 </body>
 </html>
