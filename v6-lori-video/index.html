@@ -149,6 +149,21 @@
     color: var(--white); font-size: 1.8rem; z-index: 2; pointer-events: none; text-align: center; width: 100%;
   }
 
+  /* Cinematic Scenes */
+  .cinematic-section { position: relative; height: 80vh; overflow: hidden; background: var(--black); margin: 4rem 0; }
+  .cinematic-scene { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; pointer-events: none; }
+  .cinematic-scene.active { opacity: 1; z-index: 2; }
+  .cinematic-img { 
+    width: 100%; height: 100%; object-fit: cover; 
+    transform: scale(1.1); transition: transform 3s ease-out; 
+  }
+  .cinematic-scene.active .cinematic-img { transform: scale(1); }
+  .cinematic-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.35); z-index: 3; pointer-events: none;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cinematic-overlay h2 { color: var(--white); font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 0.1em; text-transform: uppercase; margin: 0; font-weight: 300; }
+
   /* Footer */
   footer { background: var(--bg-accent); color: var(--black); padding: 4rem 3rem; text-align: center; font-size: 0.85rem; }
   .footer-logo { font-size: 1.5rem; margin-bottom: 2rem; }
@@ -254,6 +269,21 @@
   </div>
 </section>
 
+<section class="cinematic-section">
+  <div class="cinematic-scene active">
+    <img src="assets/slide2.jpg" class="cinematic-img" alt="Luxury property view">
+  </div>
+  <div class="cinematic-scene">
+    <img src="assets/slide3.jpg" class="cinematic-img" alt="Executive lifestyle">
+  </div>
+  <div class="cinematic-scene">
+    <img src="assets/slide4.jpg" class="cinematic-img" alt="Modern architecture">
+  </div>
+  <div class="cinematic-overlay">
+    <h2 class="serif">The Lifestyle</h2>
+  </div>
+</section>
+
 <section id="contact" class="intro" style="padding-top: 4rem; padding-bottom: 8rem;">
   <h2 class="serif">Work With Emily</h2>
   <p>Equity events, relocations, career pivots — advised discreetly, in English or Traditional Chinese.</p>
@@ -294,6 +324,16 @@
     if(close) close.addEventListener('click', closeMenu);
     overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
     document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+
+    var cineScenes = document.querySelectorAll('.cinematic-scene');
+    if(cineScenes.length > 0) {
+      var cIndex = 0;
+      setInterval(function(){
+        cineScenes[cIndex].classList.remove('active');
+        cIndex = (cIndex + 1) % cineScenes.length;
+        cineScenes[cIndex].classList.add('active');
+      }, 2000);
+    }
   })();
 </script>
 
