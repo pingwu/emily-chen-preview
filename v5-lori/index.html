@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emily Chen | Real Estate Advisor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+  :root {
+    --white: #FFFFFF;
+    --black: #2C2A29; /* Soft charcoal instead of harsh black */
+    --gray-dark: #5A5652; /* Warm gray for text */
+    --gray-light: #948C84; /* Soft warm gray for secondary text */
+    --bg-light: #FDF9F6; /* Very light warm cream/blush background */
+    --bg-accent: #F4E8E1; /* Slightly darker blush/cream for sections */
+    --border: #E8E0DA;
+    --accent: #C79E8B; /* Soft terracotta/champagne accent */
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--black);
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: "Fraunces", Georgia, serif; font-weight: 400; }
+  
+  .wrap { max-width: 76rem; margin: 0 auto; padding: 0 2rem; }
+
+  /* Topbar & Header (Lori Style) */
+  header.main { position: absolute; top: 0; left: 0; right: 0; z-index: 4; padding-top: 2rem; }
+  header.main .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  
+  .menu-toggle {
+    display: flex; align-items: center; gap: 0.8rem; background: none; border: 0; color: var(--white);
+    font: inherit; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 0.4rem 0;
+  }
+  .menu-toggle .bars { display: inline-flex; flex-direction: column; gap: 5px; }
+  .menu-toggle .bars span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: background 0.3s; }
+  .menu-toggle:hover .bars span { background: var(--accent); }
+  .menu-toggle:hover { color: var(--accent); }
+  
+  .brandmark { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; letter-spacing: 0.15em; color: var(--white); text-align: center; text-transform: uppercase; }
+  
+  .navlinks { display: flex; gap: 2rem; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); }
+  .navlinks a { transition: opacity 0.3s; }
+  .navlinks a:hover { opacity: 0.7; }
+  @media(max-width:64rem){ .navlinks { display: none; } }
+
+  /* Full Screen Overlay Menu */
+  .menu-overlay {
+    position: fixed; inset: 0; z-index: 10; color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(253, 249, 246, 0.95); /* Light airy blush background */
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    opacity: 0; transform: scale(1.03); pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .menu-overlay.open { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .menu-overlay .close {
+    position: absolute; top: 2.5rem; right: 2.5rem; background: none; border: 0; color: var(--black);
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+  }
+  .menu-overlay ul { list-style: none; margin: 0; padding: 0; text-align: center; }
+  .menu-overlay li {
+    margin: 1rem 0; opacity: 0; transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .menu-overlay.open li { opacity: 1; transform: translateY(0); }
+  .menu-overlay.open li:nth-child(1) { transition-delay: 0.05s; }
+  .menu-overlay.open li:nth-child(2) { transition-delay: 0.1s; }
+  .menu-overlay.open li:nth-child(3) { transition-delay: 0.15s; }
+  .menu-overlay.open li:nth-child(4) { transition-delay: 0.2s; }
+  .menu-overlay.open li:nth-child(5) { transition-delay: 0.25s; }
+  .menu-overlay a {
+    color: var(--black); font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; font-style: italic;
+    transition: color 0.3s ease;
+  }
+  .menu-overlay a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.4s ease; }
+  .hero .slide.active { opacity: 1; }
+  .hero .slide::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.25); }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
+  .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); margin: 0; font-weight: 400; letter-spacing: 0.05em; }
+  
+  .hero .dots { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; gap: 0.5rem; }
+  .hero .dots button { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.7); background: transparent; padding: 0; cursor: pointer; transition: background 0.3s; }
+  .hero .dots button.active { background: var(--white); }
+  
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; color: var(--white); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+
+  /* Intro Section */
+  .intro { padding: 8rem 2rem; text-align: center; max-width: 900px; margin: 0 auto; }
+  .intro h2 { font-size: 2.2rem; margin-bottom: 2rem; }
+  .intro p { font-size: 1.1rem; color: var(--gray-dark); margin-bottom: 2rem; font-weight: 300; }
+  .btn-outline {
+    display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent);
+    color: var(--black); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: var(--bg-accent); border-color: var(--bg-accent); }
+
+  /* Properties Slider */
+  .properties { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 0 3rem 6rem; }
+  .properties::-webkit-scrollbar { display: none; }
+  .prop-card { min-width: 80%; scroll-snap-align: center; position: relative; }
+  .prop-image { aspect-ratio: 16/9; background-color: #eee; background-size: cover; background-position: center; }
+  .prop-info {
+    position: absolute; bottom: -3rem; right: 2rem; background: var(--white);
+    padding: 2.5rem; width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+  .prop-info h3 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+  .prop-info .price { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
+  .prop-info .specs { display: flex; gap: 1rem; color: var(--gray-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .btn-solid {
+    display: inline-block; padding: 0.8rem 2rem; background: var(--accent); color: var(--white);
+    text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem;
+    transition: opacity 0.3s;
+  }
+  .btn-solid:hover { opacity: 0.8; }
+
+  /* Testimonials */
+  .testimonials { background: var(--bg-light); padding: 8rem 2rem; text-align: center; }
+  .testimonial-wrap { max-width: 800px; margin: 0 auto; }
+  .testimonial-wrap h2 { font-size: 2.2rem; margin-bottom: 3rem; }
+  .quote { font-size: 1.5rem; line-height: 1.4; font-style: italic; margin-bottom: 2rem; }
+  .author { font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-light); }
+
+  /* Neighborhoods */
+  .neighborhoods { padding: 8rem 3rem; }
+  .neighborhoods h2 { font-size: 2.2rem; text-align: center; margin-bottom: 4rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .hood-card { position: relative; aspect-ratio: 1/1; background-size: cover; background-position: center; }
+  .hood-card::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.2); transition: background 0.3s; }
+  .hood-card:hover::after { background: rgba(0,0,0,0.4); }
+  .hood-label {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: var(--white); font-size: 1.8rem; z-index: 2; pointer-events: none;
+  }
+
+  /* Footer */
+  footer { background: var(--bg-accent); color: var(--black); padding: 4rem 3rem; text-align: center; font-size: 0.85rem; }
+  .footer-logo { font-size: 1.5rem; margin-bottom: 2rem; }
+  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; opacity: 0.7; }
+</style>
+</head>
+<body>
+
+<header class="main">
+  <div class="wrap">
+    <button class="menu-toggle" id="menu-open" aria-haspopup="true" aria-controls="menu-overlay">
+      <span class="bars"><span></span><span></span><span></span></span> Menu
+    </button>
+    <span class="brandmark">Emily Chen</span>
+    <div class="navlinks"><a href="#about">Meet Emily</a><a href="#contact">Contact</a></div>
+  </div>
+</header>
+
+<div class="hero" id="hero-carousel">
+  <div class="slide active" style="background-image:url('assets/slide1.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/slide2.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/slide3.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/slide4.jpg')"></div>
+  <div class="slide" style="background-image:url('assets/slide5.jpg')"></div>
+
+  <div class="hero-content">
+    <h1 class="serif">Emily Chen</h1>
+  </div>
+  
+  <div class="dots" role="tablist" aria-label="Hero slides">
+    <button class="active" data-i="0" aria-label="Slide 1"></button>
+    <button data-i="1" aria-label="Slide 2"></button>
+    <button data-i="2" aria-label="Slide 3"></button>
+    <button data-i="3" aria-label="Slide 4"></button>
+    <button data-i="4" aria-label="Slide 5"></button>
+  </div>
+
+  <div class="scroll-indicator">Scroll</div>
+</div>
+
+<section id="about" class="intro">
+  <h2 class="serif">Meet Emily Chen</h2>
+  <p>In a real estate market where many focus solely on transaction volume, Emily takes a profoundly different approach. Operating at the intersection of real estate strategy, executive coaching, and investment thinking, she provides a highly personalized advisory service tailored for Silicon Valley's founders and executives.</p>
+  <p>With an Executive MBA from UCLA Anderson and strategic experience across the US, Taiwan, China, and Japan, Emily advises clients through major life transitions—whether an equity event, relocation, or career pivot—ensuring the optimal outcome for their portfolios and their lives.</p>
+  <a href="#contact" class="btn-outline">Let's Connect</a>
+</section>
+
+<section id="portfolio" style="padding-top: 4rem;">
+  <div class="properties">
+    <div class="prop-card">
+      <div class="prop-image" style="background-image: url('../v4-lori/assets/prop1.jpg');"></div>
+      <div class="prop-info">
+        <h3 class="serif">Ipsum Dolor Lane</h3>
+        <div class="price">Palo Alto, CA</div>
+        <div class="specs">
+          <span>— Beds</span>
+          <span>— Baths</span>
+          <span>—,——— Sq.Ft.</span>
+        </div>
+        <a href="#" class="btn-solid">View Listing</a>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-image" style="background-image: url('../v4-lori/assets/prop2.jpg');"></div>
+      <div class="prop-info">
+        <h3 class="serif">Amet Consect Court</h3>
+        <div class="price">Atherton, CA</div>
+        <div class="specs">
+          <span>— Beds</span>
+          <span>— Baths</span>
+          <span>—,——— Sq.Ft.</span>
+        </div>
+        <a href="#" class="btn-solid">View Listing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials" class="testimonials">
+  <div class="testimonial-wrap">
+    <h2 class="serif">Testimonials</h2>
+    <div class="quote serif">"Emily is more than an agent. She fundamentally understood the complexity of our equity situation and guided us through a major transition with clarity and strategic vision."</div>
+    <div class="author">Executive Client, Palo Alto</div>
+  </div>
+</section>
+
+<section class="neighborhoods" id="communities">
+  <h2 class="serif">Neighborhoods</h2>
+  <div class="grid">
+    <a href="#" class="hood-card" style="background-image:url('assets/hood1.jpg');">
+      <div class="hood-label serif">Coaching Spaces</div>
+    </a>
+    <a href="#" class="hood-card" style="background-image: url('../v4-lori/assets/hood2.jpg');">
+      <div class="hood-label serif">Menlo Park</div>
+    </a>
+    <a href="#" class="hood-card" style="background-image: url('../v4-lori/assets/hood3.jpg');">
+      <div class="hood-label serif">Atherton</div>
+    </a>
+  </div>
+</section>
+
+<section id="contact" class="intro" style="padding-top: 4rem; padding-bottom: 8rem;">
+  <h2 class="serif">Work With Emily</h2>
+  <p>Thanks, please provide more information to help serve you.</p>
+  <a href="mailto:emily@example.com" class="btn-outline">Contact Emily</a>
+</section>
+
+<footer>
+  <div class="footer-logo serif">Emily Chen</div>
+  <div class="footer-links">
+    <a href="#">Compass</a>
+    <a href="#">CA DRE #01870054</a>
+    <a href="#">(510) 908-0081</a>
+  </div>
+  <div style="opacity: 0.5; margin-top: 2rem;">
+    &copy; 2026 Emily Chen. All Rights Reserved.
+  </div>
+</footer>
+
+<div class="menu-overlay" id="menu-overlay">
+  <button class="close" id="menu-close" aria-label="Close menu">Close ✕</button>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">Meet Emily</a></li>
+    <li><a href="#portfolio">Properties</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
+<script>
+  (function(){
+    var open = document.getElementById('menu-open'), close = document.getElementById('menu-close'),
+        overlay = document.getElementById('menu-overlay');
+    function openMenu(){ overlay.classList.add('open'); }
+    function closeMenu(){ overlay.classList.remove('open'); }
+    if(open) open.addEventListener('click', openMenu);
+    if(close) close.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+
+    var slides = document.querySelectorAll('#hero-carousel .slide');
+    var dots = document.querySelectorAll('#hero-carousel .dots button');
+    var i = 0, timer;
+    if(slides.length > 0) {
+      function show(n){
+        slides[i].classList.remove('active'); dots[i].classList.remove('active');
+        i = (n + slides.length) % slides.length;
+        slides[i].classList.add('active'); dots[i].classList.add('active');
+      }
+      function next(){ show(i + 1); }
+      function start(){ timer = setInterval(next, 5000); }
+      function stop(){ clearInterval(timer); }
+      dots.forEach(function(d){ d.addEventListener('click', function(){ stop(); show(+d.dataset.i); start(); }); });
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+    }
+  })();
+</script>
+
+</body>
+</html>
