@@ -17,14 +17,12 @@
     --accent: #C79E8B; /* Soft terracotta/champagne accent */
   }
   * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--white);
-    color: var(--black);
-    font-family: "Inter", sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--white); color: var(--black);
+    font-family: "Inter", sans-serif; font-size: 16px; line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; /* Prevent horizontal wobble */
   }
   a { color: inherit; text-decoration: none; }
   .serif { font-family: "Fraunces", Georgia, serif; font-weight: 400; }
@@ -52,12 +50,12 @@
   @media(max-width:64rem){ .navlinks { display: none; } }
 
   /* Full Screen Overlay Menu */
+  body.menu-open { overflow: hidden; }
   .menu-overlay {
     position: fixed; inset: 0; z-index: 10; color: var(--black);
     display: flex; align-items: center; justify-content: center;
-    background: rgba(253, 249, 246, 0.95); /* Light airy blush background */
-    -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px);
+    background: rgba(253, 249, 246, 0.95);
+    -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px);
     opacity: 0; transform: scale(1.03); pointer-events: none;
     transition: opacity 0.5s ease, transform 0.5s ease;
   }
@@ -89,8 +87,8 @@
   .hero .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.4s ease; }
   .hero .slide.active { opacity: 1; }
   .hero .slide::after { content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.25); }
-  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); }
-  .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); margin: 0; font-weight: 400; letter-spacing: 0.05em; }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 0 1rem; }
+  .hero h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); margin: 0; font-weight: 400; letter-spacing: 0.05em; }
   
   .hero .dots { position: absolute; bottom: 4rem; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; gap: 0.5rem; }
   .hero .dots button { width: 8px; height: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.7); background: transparent; padding: 0; cursor: pointer; transition: background 0.3s; }
@@ -113,13 +111,17 @@
   .btn-outline:hover { background: var(--bg-accent); border-color: var(--bg-accent); }
 
   /* Properties Slider */
-  .properties { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 2rem; padding: 0 3rem 6rem; }
+  .properties { 
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; 
+    gap: 2rem; padding: 0 3rem 6rem; 
+    -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+  }
   .properties::-webkit-scrollbar { display: none; }
   .prop-card { min-width: 80%; scroll-snap-align: center; position: relative; }
   .prop-image { aspect-ratio: 16/9; background-color: #eee; background-size: cover; background-position: center; }
   .prop-info {
     position: absolute; bottom: -3rem; right: 2rem; background: var(--white);
-    padding: 2.5rem; width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    padding: 2.5rem; width: auto; min-width: 300px; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   }
   .prop-info h3 { margin: 0 0 0.5rem; font-size: 1.5rem; }
   .prop-info .price { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
@@ -147,13 +149,25 @@
   .hood-card:hover::after { background: rgba(0,0,0,0.4); }
   .hood-label {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: var(--white); font-size: 1.8rem; z-index: 2; pointer-events: none;
+    color: var(--white); font-size: 1.8rem; z-index: 2; pointer-events: none; text-align: center; width: 100%;
   }
 
   /* Footer */
   footer { background: var(--bg-accent); color: var(--black); padding: 4rem 3rem; text-align: center; font-size: 0.85rem; }
   .footer-logo { font-size: 1.5rem; margin-bottom: 2rem; }
-  .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; opacity: 0.7; }
+  .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; opacity: 0.7; }
+
+  /* Mobile Responsive Fixes */
+  @media(max-width: 48rem) {
+    .intro, .testimonials, .neighborhoods { padding: 4rem 1.5rem; }
+    .properties { padding: 0 1.5rem 2rem; gap: 1rem; }
+    .prop-card { min-width: 90%; }
+    .prop-info { 
+      position: relative; bottom: auto; right: auto; left: auto;
+      width: 100%; max-width: none; box-shadow: none; padding: 1.5rem 0;
+    }
+    .quote { font-size: 1.25rem; }
+  }
 </style>
 </head>
 <body>
@@ -284,8 +298,8 @@
   (function(){
     var open = document.getElementById('menu-open'), close = document.getElementById('menu-close'),
         overlay = document.getElementById('menu-overlay');
-    function openMenu(){ overlay.classList.add('open'); }
-    function closeMenu(){ overlay.classList.remove('open'); }
+    function openMenu(){ overlay.classList.add('open'); document.body.classList.add('menu-open'); }
+    function closeMenu(){ overlay.classList.remove('open'); document.body.classList.remove('menu-open'); }
     if(open) open.addEventListener('click', openMenu);
     if(close) close.addEventListener('click', closeMenu);
     overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
