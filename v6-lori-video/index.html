@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emily Chen | Real Estate Advisor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+  :root {
+    --white: #FBF7EF;
+    --black: #15130F;
+    --gray-dark: #6C675B;
+    --gray-light: #B8B0A3;
+    --bg-light: #201D17;
+    --bg-accent: #15130F;
+    --border: #3A352A;
+    --accent: #C9A36B; /* Bright bronze */
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--black); color: var(--white);
+    font-family: "Inter", sans-serif; font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; /* Prevent horizontal wobble */
+  }
+  a { color: inherit; text-decoration: none; }
+  .serif { font-family: "Fraunces", Georgia, serif; font-weight: 400; }
+  
+  .wrap { max-width: 76rem; margin: 0 auto; padding: 0 2rem; }
+
+  /* Topbar & Header (Lori Style) */
+  header.main { position: absolute; top: 0; left: 0; right: 0; z-index: 4; padding-top: 2rem; }
+  header.main .wrap { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  
+  .menu-toggle {
+    display: flex; align-items: center; gap: 0.8rem; background: none; border: 0; color: var(--white);
+    font: inherit; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; padding: 0.4rem 0;
+  }
+  .menu-toggle .bars { display: inline-flex; flex-direction: column; gap: 5px; }
+  .menu-toggle .bars span { display: block; width: 22px; height: 1.5px; background: var(--white); transition: background 0.3s; }
+  .menu-toggle:hover .bars span { background: var(--accent); }
+  .menu-toggle:hover { color: var(--accent); }
+  
+  .brandmark { font-family: "Fraunces", Georgia, serif; font-size: 1.25rem; letter-spacing: 0.15em; color: var(--white); text-align: center; text-transform: uppercase; }
+  
+  .navlinks { display: flex; gap: 2rem; font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); }
+  .navlinks a { transition: opacity 0.3s; }
+  .navlinks a:hover { opacity: 0.7; }
+  @media(max-width:64rem){ .navlinks { display: none; } }
+
+  /* Full Screen Overlay Menu */
+  body.menu-open { overflow: hidden; }
+  .menu-overlay {
+    position: fixed; inset: 0; z-index: 10; color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(21, 19, 15, 0.85); /* Dark background */
+    -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px);
+    opacity: 0; transform: scale(1.03); pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .menu-overlay.open { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .menu-overlay .close {
+    position: absolute; top: 2.5rem; right: 2.5rem; background: none; border: 0; color: var(--white);
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+  }
+  .menu-overlay ul { list-style: none; margin: 0; padding: 0; text-align: center; }
+  .menu-overlay li {
+    margin: 1rem 0; opacity: 0; transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .menu-overlay.open li { opacity: 1; transform: translateY(0); }
+  .menu-overlay.open li:nth-child(1) { transition-delay: 0.05s; }
+  .menu-overlay.open li:nth-child(2) { transition-delay: 0.1s; }
+  .menu-overlay.open li:nth-child(3) { transition-delay: 0.15s; }
+  .menu-overlay.open li:nth-child(4) { transition-delay: 0.2s; }
+  .menu-overlay.open li:nth-child(5) { transition-delay: 0.25s; }
+  .menu-overlay a {
+    color: var(--white); font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 400; font-style: italic;
+    transition: color 0.3s ease;
+  }
+  .menu-overlay a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--black); }
+  .hero-video-wrapper { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+  .hero-video-wrapper iframe { position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); opacity: 0.7; }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 0 1rem; }
+  .hero h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); margin: 0; font-weight: 400; letter-spacing: 0.05em; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+  
+  .scroll-indicator {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; color: var(--white); font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+
+  /* Intro Section */
+  .intro { padding: 8rem 2rem; text-align: center; max-width: 900px; margin: 0 auto; }
+  .intro h2 { font-size: 2.2rem; margin-bottom: 2rem; }
+  .intro p { font-size: 1.1rem; color: var(--gray-dark); margin-bottom: 2rem; font-weight: 300; }
+  .btn-outline {
+    display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent);
+    color: var(--black); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: var(--bg-accent); border-color: var(--bg-accent); }
+
+  /* Properties Grid */
+  .properties {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 2.5rem; padding: 0 2rem 4rem; max-width: 76rem; margin: 0 auto;
+  }
+  .prop-card { position: relative; }
+  .prop-image { aspect-ratio: 16/9; background-color: #eee; background-size: cover; background-position: center; }
+  .prop-info {
+    background: var(--white); padding: 1.5rem 0 0;
+  }
+  .prop-info h3 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+  .prop-info .price { font-size: 1.1rem; font-weight: 500; margin-bottom: 1rem; }
+  .prop-info .specs { display: flex; gap: 1rem; color: var(--gray-light); font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .prop-source-note {
+    grid-column: 1/-1; margin-top: -1.5rem; font-size: 0.82rem; color: var(--gray-dark);
+    border: 1.5px dashed var(--accent); background: var(--bg-light); border-radius: 2px;
+    padding: 0.85rem 1.1rem; max-width: 44rem;
+  }
+  .btn-solid {
+    display: inline-block; padding: 0.8rem 2rem; background: var(--accent); color: var(--white);
+    text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.75rem;
+    transition: opacity 0.3s;
+  }
+  .btn-solid:hover { opacity: 0.8; }
+
+  /* Testimonials */
+  .testimonials { background: var(--bg-light); padding: 8rem 2rem; text-align: center; }
+  .testimonial-wrap { max-width: 800px; margin: 0 auto; }
+  .testimonial-wrap h2 { font-size: 2.2rem; margin-bottom: 3rem; }
+  .quote { font-size: 1.5rem; line-height: 1.4; font-style: italic; margin-bottom: 2rem; }
+  .author { font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray-light); }
+
+  /* Neighborhoods */
+  .neighborhoods { padding: 8rem 3rem; }
+  .neighborhoods h2 { font-size: 2.2rem; text-align: center; margin-bottom: 4rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .hood-card { position: relative; aspect-ratio: 1/1; background-size: cover; background-position: center; }
+  .hood-card::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.2); transition: background 0.3s; }
+  .hood-card:hover::after { background: rgba(0,0,0,0.4); }
+  .hood-label {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: var(--white); font-size: 1.8rem; z-index: 2; pointer-events: none; text-align: center; width: 100%;
+  }
+
+  /* Footer */
+  footer { background: var(--bg-accent); color: var(--black); padding: 4rem 3rem; text-align: center; font-size: 0.85rem; }
+  .footer-logo { font-size: 1.5rem; margin-bottom: 2rem; }
+  .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; opacity: 0.7; }
+
+  /* Mobile Responsive Fixes */
+  @media(max-width: 48rem) {
+    .intro, .testimonials, .neighborhoods { padding: 4rem 1.5rem; }
+    .properties { padding: 0 1.5rem 3rem; gap: 2rem; }
+    .quote { font-size: 1.25rem; }
+  }
+
+  .demo-note{background:#F2E9D8;color:#7C5F37;font-size:.72rem;letter-spacing:.06em;padding:.55rem 2rem;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="demo-note">STYLE STUDY V6 — pure Lori structure with original stark dark palette and video hero. Stock photography; property specs and testimonial are marked TODO — Emily has no public transaction data or approved quotes to draw from.</div>
+
+<header class="main">
+  <div class="wrap">
+    <button class="menu-toggle" id="menu-open" aria-haspopup="true" aria-controls="menu-overlay">
+      <span class="bars"><span></span><span></span><span></span></span> Menu
+    </button>
+    <span class="brandmark">Emily Chen</span>
+    <div class="navlinks"><a href="#about">Meet Emily</a><a href="#contact">Contact</a></div>
+  </div>
+</header>
+
+<div class="hero" id="hero-video">
+  <div class="hero-video-wrapper">
+    <!-- Placeholder video of a luxury home using YouTube -->
+    <iframe src="https://www.youtube.com/embed/Pj15P5oJomQ?autoplay=1&mute=1&loop=1&playlist=Pj15P5oJomQ&controls=0&showinfo=0&modestbranding=1&playsinline=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="serif">Emily Chen</h1>
+  </div>
+  <div class="scroll-indicator">Scroll</div>
+</div>
+
+<section id="about" class="intro">
+  <h2 class="serif">Meet Emily Chen</h2>
+  <p>In a real estate market where many focus solely on transaction volume, Emily takes a profoundly different approach. Operating at the intersection of real estate strategy, executive coaching, and investment thinking, she provides a highly personalized advisory service tailored for Silicon Valley's founders and executives.</p>
+  <p>With an Executive MBA from UCLA Anderson and strategic experience across the US, Taiwan, China, and Japan, Emily advises clients through major life transitions—whether an equity event, relocation, or career pivot—ensuring the optimal outcome for their portfolios and their lives.</p>
+  <a href="#contact" class="btn-outline">Let's Connect</a>
+</section>
+
+<section id="portfolio" style="padding-top: 4rem;">
+  <div class="properties">
+    <div class="prop-card">
+      <div class="prop-image" style="background-image: url('assets/prop1.jpg');"></div>
+      <div class="prop-info">
+        <h3 class="serif">Ipsum Dolor Lane</h3>
+        <div class="price">Palo Alto, CA</div>
+        <div class="specs">
+          <span>— Beds</span>
+          <span>— Baths</span>
+          <span>—,——— Sq.Ft.</span>
+        </div>
+        <a href="#" class="btn-solid">View Listing</a>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div class="prop-image" style="background-image: url('assets/prop2.jpg');"></div>
+      <div class="prop-info">
+        <h3 class="serif">Amet Consect Court</h3>
+        <div class="price">Atherton, CA</div>
+        <div class="specs">
+          <span>— Beds</span>
+          <span>— Baths</span>
+          <span>—,——— Sq.Ft.</span>
+        </div>
+        <a href="#" class="btn-solid">View Listing</a>
+      </div>
+    </div>
+    <div class="prop-source-note"><strong>[TODO: source needed]</strong> — Emily's actual represented properties, prices, and specs. No transaction data is publicly available on her Compass profile; this section is structural placeholder only, not a claim of past sales.</div>
+  </div>
+</section>
+
+<section id="testimonials" class="testimonials">
+  <div class="testimonial-wrap">
+    <h2 class="serif">Testimonials</h2>
+    <div class="quote serif" style="font-style:normal;font-size:1rem;color:var(--gray-dark);border:1.5px dashed var(--accent);background:var(--white);border-radius:2px;padding:1.5rem 1.75rem;display:inline-block;text-align:left;max-width:34rem">
+      <strong style="display:block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem">[TODO: source needed]</strong>
+      Real client testimonial. Awaiting an approved quote from Emily before anything is published here — no testimonial has been written or collected yet.
+    </div>
+  </div>
+</section>
+
+<section class="neighborhoods" id="communities">
+  <h2 class="serif">Neighborhoods</h2>
+  <div class="grid">
+    <a href="#" class="hood-card" style="background-image:url('assets/hood1.jpg');">
+      <div class="hood-label serif">Palo Alto</div>
+    </a>
+    <a href="#" class="hood-card" style="background-image: url('assets/hood2.jpg');">
+      <div class="hood-label serif">Menlo Park</div>
+    </a>
+    <a href="#" class="hood-card" style="background-image: url('assets/hood3.jpg');">
+      <div class="hood-label serif">Atherton</div>
+    </a>
+  </div>
+</section>
+
+<section id="contact" class="intro" style="padding-top: 4rem; padding-bottom: 8rem;">
+  <h2 class="serif">Work With Emily</h2>
+  <p>Equity events, relocations, career pivots — advised discreetly, in English or Traditional Chinese.</p>
+  <a href="tel:+15109080081" class="btn-outline">(510) 908-0081</a>
+  <div style="margin-top:1.4rem;font-size:0.82rem;color:var(--gray-dark);border:1.5px dashed var(--accent);background:var(--bg-light);border-radius:2px;padding:0.85rem 1.1rem;max-width:34rem;margin-left:auto;margin-right:auto">[TODO: source needed] — confirm preferred email / scheduling link before this goes live.</div>
+</section>
+
+<footer>
+  <div class="footer-logo serif">Emily Chen</div>
+  <div class="footer-links">
+    <a href="#">Compass</a>
+    <a href="#">CA DRE #01870054</a>
+    <a href="#">(510) 908-0081</a>
+  </div>
+  <div style="opacity: 0.5; margin-top: 2rem;">
+    &copy; 2026 Emily Chen. All Rights Reserved.
+  </div>
+</footer>
+
+<div class="menu-overlay" id="menu-overlay">
+  <button class="close" id="menu-close" aria-label="Close menu">Close ✕</button>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#about">Meet Emily</a></li>
+    <li><a href="#portfolio">Properties</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</div>
+
+<script>
+  (function(){
+    var open = document.getElementById('menu-open'), close = document.getElementById('menu-close'),
+        overlay = document.getElementById('menu-overlay');
+    function openMenu(){ overlay.classList.add('open'); document.body.classList.add('menu-open'); }
+    function closeMenu(){ overlay.classList.remove('open'); document.body.classList.remove('menu-open'); }
+    if(open) open.addEventListener('click', openMenu);
+    if(close) close.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+  })();
+</script>
+
+</body>
+</html>
