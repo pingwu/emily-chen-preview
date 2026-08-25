@@ -374,8 +374,58 @@
     padding-top:1.8rem;font-size:.7rem;color:#8A837A;letter-spacing:.06em;
   }
 
+  /* ---------- Full-bleed ambient film band (sits above the footer) ----------
+     Breaks the container to run edge-to-edge. Each .frame is a drop-in slot:
+     add <video class="reel-video"> and it takes over the whole band. */
+  .filmband{
+    position:relative;width:100vw;left:50%;margin-left:-50vw;
+    min-height:min(86vh,42rem);display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:#0E0D0C;color:#fff;text-align:center;padding:5rem 0;
+  }
+  .filmband .reel{position:absolute;inset:0;overflow:hidden}
+  .filmband video.reel-video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  }
+  .filmband .frame{
+    position:absolute;inset:-8%;background-size:cover;background-position:center;
+    opacity:0;transition:opacity 2.4s ease;will-change:transform,opacity;
+  }
+  .filmband .frame.on{opacity:1;animation:reelDrift 28s ease-in-out infinite alternate}
+  @keyframes reelDrift{
+    from{transform:scale(1.06) translate3d(0,0,0)}
+    to{transform:scale(1.2) translate3d(1.8%,-2.2%,0)}
+  }
+  .filmband .grade{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(62% 54% at 50% 50%,rgba(10,9,8,.5) 0%,rgba(10,9,8,0) 74%),
+      linear-gradient(180deg,rgba(10,9,8,.68) 0%,rgba(10,9,8,.34) 42%,rgba(10,9,8,.78) 100%);
+  }
+  .filmband .inner{position:relative;z-index:2;padding:0 1.75rem;max-width:44rem}
+  .filmband .eyebrow{color:rgba(255,255,255,.72)}
+  .filmband h2{
+    font-family:"Playfair Display",Georgia,serif;font-weight:400;
+    font-size:clamp(1.9rem,5vw,3.4rem);line-height:1.16;letter-spacing:.02em;
+    margin:.9rem 0 1.1rem;text-wrap:balance;text-shadow:0 2px 30px rgba(8,7,6,.5);
+  }
+  .filmband h2 em{font-style:italic}
+  .filmband p{
+    color:rgba(255,255,255,.9);max-width:44ch;margin:0 auto 2rem;font-size:1.02rem;
+    text-shadow:0 1px 18px rgba(8,7,6,.55);
+  }
+  .filmband .reeldots{
+    position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;display:flex;gap:.55rem;
+  }
+  .filmband .reeldots button{
+    width:7px;height:7px;border-radius:50%;padding:0;cursor:pointer;
+    border:1px solid rgba(255,255,255,.7);background:transparent;transition:background .3s ease;
+  }
+  .filmband .reeldots button.active{background:#fff}
+  .filmband .medianote{top:1rem;right:1.1rem}
+
   @media(prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
+    .filmband .frame.on{animation:none}
     .js .reveal{opacity:1;transform:none;transition:none}
     .hero .layer.active,.hood.in .motion{animation:none}
     .listing .thumb img,.hood .motion{transition:none}
@@ -599,6 +649,40 @@
   </div>
 </section>
 
+<!-- ========== FULL-BLEED AMBIENT FILM BAND (above footer) ========== -->
+<section class="filmband" id="filmband" aria-label="Silicon Valley and the Peninsula">
+  <span class="medianote">Ambient placeholder — drop-in video slot</span>
+  <div class="reel" id="reel">
+    <!--
+      PRODUCTION SWAP — replace the frames below with a single muted loop:
+      <video class="reel-video" autoplay muted loop playsinline preload="metadata"
+             poster="assets/slide2.jpg">
+        <source src="assets/band-loop.mp4" type="video/mp4">
+      </video>
+      Keep it muted + playsinline or iOS will refuse to autoplay it.
+    -->
+    <div class="frame on" style="background-image:url('assets/slide2.jpg')"></div>
+    <div class="frame" style="background-image:url('assets/slide3.jpg')"></div>
+    <div class="frame" style="background-image:url('assets/slide4.jpg')"></div>
+    <div class="frame" style="background-image:url('assets/slide5.jpg')"></div>
+  </div>
+  <div class="grade"></div>
+
+  <div class="inner">
+    <span class="eyebrow">Before the listings, the questions</span>
+    <h2>Most agents tell you what a home is worth.<br><em>Emily asks a different question first.</em></h2>
+    <p>Equity events, relocations, career pivots — advised discreetly, in English and Traditional Chinese, across Silicon Valley and the Peninsula.</p>
+    <a class="btn light" href="#contact">Let&rsquo;s Connect</a>
+  </div>
+
+  <div class="reeldots" role="tablist" aria-label="Background footage">
+    <button class="active" data-i="0" aria-label="Clip 1"></button>
+    <button data-i="1" aria-label="Clip 2"></button>
+    <button data-i="2" aria-label="Clip 3"></button>
+    <button data-i="3" aria-label="Clip 4"></button>
+  </div>
+</section>
+
 <!-- ================= FOOTER ================= -->
 <footer id="contact">
   <div class="wrap">
@@ -703,6 +787,26 @@
     d.addEventListener("click", function(){ qStop(); qShow(+d.dataset.i); qStart(); });
   });
   qStart();
+
+  /* ---- Full-bleed film band (skipped entirely if a real <video> is dropped in) ---- */
+  var reel = document.getElementById("reel");
+  if(reel && !reel.querySelector("video")){
+    var frames = reel.querySelectorAll(".frame"),
+        rDots  = document.querySelectorAll(".reeldots button"),
+        ri = 0, rTimer;
+    function reelShow(n){
+      if(!frames.length) return;
+      frames[ri].classList.remove("on"); rDots[ri].classList.remove("active");
+      ri = (n + frames.length) % frames.length;
+      frames[ri].classList.add("on"); rDots[ri].classList.add("active");
+    }
+    function reelStart(){ if(!reduced) rTimer = setInterval(function(){ reelShow(ri+1); }, 7500); }
+    function reelStop(){ clearInterval(rTimer); }
+    Array.prototype.forEach.call(rDots, function(d){
+      d.addEventListener("click", function(){ reelStop(); reelShow(+d.dataset.i); reelStart(); });
+    });
+    reelStart();
+  }
 
   /* ---- Reveal on scroll + start neighborhood ambient drift in view ---- */
   var revealables = document.querySelectorAll(".reveal");
