@@ -20,6 +20,7 @@
     --dark-soft:#2A2825;
     --dark-text:#D9D5CD;
     --accent:#8C7A5E;       /* restrained warm metallic, used sparingly */
+    --reel-transition:2s;   /* updated from the walkthrough video metadata */
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -385,12 +386,12 @@
   .filmband .reel{position:absolute;inset:0;overflow:hidden}
   .filmband video.reel-video{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-    opacity:0;transition:opacity 2s ease;will-change:opacity;
+    opacity:0;transition:opacity var(--reel-transition) ease;will-change:opacity;
   }
   .filmband video.reel-video.on{opacity:1}
   .filmband .frame{
     position:absolute;inset:-8%;background-size:cover;background-position:center;
-    opacity:0;transition:opacity 2s ease;will-change:transform,opacity;
+    opacity:0;transition:opacity var(--reel-transition) ease;will-change:transform,opacity;
   }
   .filmband .frame.on{opacity:1}
   .filmband .frame.on:not(.reel-video){animation:reelDrift 28s ease-in-out infinite alternate}
@@ -658,7 +659,7 @@
   <div class="reel" id="reel">
     <video class="frame reel-video on" autoplay muted loop playsinline preload="metadata"
            poster="assets/slide2.jpg">
-      <source src="assets/living_room_pov_walk_2s_silent.mp4" type="video/mp4">
+      <source src="assets/walking_through_rooms.mp4" type="video/mp4">
     </video>
     <div class="frame" style="background-image:url('assets/slide3.jpg')"></div>
     <div class="frame" style="background-image:url('assets/slide4.jpg')"></div>
@@ -805,6 +806,16 @@
         return (isFinite(current.duration) && current.duration > 0 ? current.duration : 2) * 2000;
       }
       return 7500;
+    }
+    var reelVideo = reel.querySelector("video.reel-video");
+    if(reelVideo){
+      function matchReelTransitionToVideo(){
+        if(isFinite(reelVideo.duration) && reelVideo.duration > 0){
+          document.documentElement.style.setProperty("--reel-transition", reelVideo.duration + "s");
+        }
+      }
+      reelVideo.addEventListener("loadedmetadata", matchReelTransitionToVideo);
+      matchReelTransitionToVideo();
     }
     function reelStart(){
       if(reduced) return;
