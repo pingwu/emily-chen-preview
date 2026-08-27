@@ -20,7 +20,7 @@
     --dark-soft:#2A2825;
     --dark-text:#D9D5CD;
     --accent:#8C7A5E;       /* restrained warm metallic, used sparingly */
-    --reel-transition:2s;   /* updated from the walkthrough video metadata */
+    --reel-transition:.7s;  /* one consistent crossfade for every carousel item */
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -390,15 +390,10 @@
   }
   .filmband video.reel-video.on{opacity:1}
   .filmband .frame{
-    position:absolute;inset:-8%;background-size:cover;background-position:center;
-    opacity:0;transition:opacity var(--reel-transition) ease;will-change:transform,opacity;
+    position:absolute;inset:0;background-size:cover;background-position:center;
+    opacity:0;transition:opacity var(--reel-transition) ease;will-change:opacity;
   }
   .filmband .frame.on{opacity:1}
-  .filmband .frame.on:not(.reel-video){animation:reelDrift 28s ease-in-out infinite alternate}
-  @keyframes reelDrift{
-    from{transform:scale(1.06) translate3d(0,0,0)}
-    to{transform:scale(1.2) translate3d(1.8%,-2.2%,0)}
-  }
   .filmband .grade{
     position:absolute;inset:0;
     background:
@@ -657,7 +652,11 @@
 <section class="filmband" id="filmband" aria-label="Silicon Valley and the Peninsula">
   <span class="medianote">Living room walkthrough</span>
   <div class="reel" id="reel">
-    <video class="frame reel-video on" autoplay muted loop playsinline preload="metadata"
+    <video class="frame reel-video on" autoplay muted playsinline preload="metadata" data-loops="1"
+           poster="assets/slide2.jpg">
+      <source src="assets/living_room_pov_walk_2s_silent.mp4" type="video/mp4">
+    </video>
+    <video class="frame reel-video" autoplay muted playsinline preload="metadata" data-loops="1"
            poster="assets/slide2.jpg">
       <source src="assets/walking_through_rooms.mp4" type="video/mp4">
     </video>
@@ -679,6 +678,7 @@
     <button data-i="1" aria-label="Clip 2"></button>
     <button data-i="2" aria-label="Clip 3"></button>
     <button data-i="3" aria-label="Clip 4"></button>
+    <button data-i="4" aria-label="Clip 5"></button>
   </div>
 </section>
 
@@ -802,20 +802,10 @@
     function reelDelay(){
       var current = frames[ri];
       if(current && current.tagName === "VIDEO"){
-        /* Play short walkthrough clips exactly twice before advancing. */
-        return (isFinite(current.duration) && current.duration > 0 ? current.duration : 2) * 2000;
+        var loops = Number(current.dataset.loops) || 1;
+        return (isFinite(current.duration) && current.duration > 0 ? current.duration : 2) * loops * 1000;
       }
       return 7500;
-    }
-    var reelVideo = reel.querySelector("video.reel-video");
-    if(reelVideo){
-      function matchReelTransitionToVideo(){
-        if(isFinite(reelVideo.duration) && reelVideo.duration > 0){
-          document.documentElement.style.setProperty("--reel-transition", reelVideo.duration + "s");
-        }
-      }
-      reelVideo.addEventListener("loadedmetadata", matchReelTransitionToVideo);
-      matchReelTransitionToVideo();
     }
     function reelStart(){
       if(reduced) return;
