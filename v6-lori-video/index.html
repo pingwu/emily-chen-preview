@@ -660,9 +660,6 @@
            poster="assets/slide2.jpg">
       <source src="assets/walking_through_rooms.mp4" type="video/mp4">
     </video>
-    <div class="frame" style="background-image:url('assets/slide3.jpg')"></div>
-    <div class="frame" style="background-image:url('assets/slide4.jpg')"></div>
-    <div class="frame" style="background-image:url('assets/slide5.jpg')"></div>
   </div>
   <div class="grade"></div>
 
@@ -676,9 +673,6 @@
   <div class="reeldots" role="tablist" aria-label="Background footage">
     <button class="active" data-i="0" aria-label="Clip 1"></button>
     <button data-i="1" aria-label="Clip 2"></button>
-    <button data-i="2" aria-label="Clip 3"></button>
-    <button data-i="3" aria-label="Clip 4"></button>
-    <button data-i="4" aria-label="Clip 5"></button>
   </div>
 </section>
 
@@ -792,18 +786,32 @@
   if(reel){
     var frames = reel.querySelectorAll(".frame"),
         rDots  = document.querySelectorAll(".reeldots button"),
-        ri = 0, rTimer;
+        ri = 0, rTimer,
+        reelPlaybackRate = 0.75;
+    function resetAndPlayVideo(frame){
+      if(!frame || frame.tagName !== "VIDEO") return;
+      frame.currentTime = 0;
+      frame.playbackRate = reelPlaybackRate;
+      var playback = frame.play();
+      if(playback) playback.catch(function(){});
+    }
+    function stopVideo(frame){
+      if(!frame || frame.tagName !== "VIDEO") return;
+      frame.pause();
+    }
     function reelShow(n){
       if(!frames.length) return;
+      stopVideo(frames[ri]);
       frames[ri].classList.remove("on"); rDots[ri].classList.remove("active");
       ri = (n + frames.length) % frames.length;
       frames[ri].classList.add("on"); rDots[ri].classList.add("active");
+      resetAndPlayVideo(frames[ri]);
     }
     function reelDelay(){
       var current = frames[ri];
       if(current && current.tagName === "VIDEO"){
         var loops = Number(current.dataset.loops) || 1;
-        return (isFinite(current.duration) && current.duration > 0 ? current.duration : 2) * loops * 1000;
+        return (isFinite(current.duration) && current.duration > 0 ? current.duration : 2) * loops * 1000 / reelPlaybackRate;
       }
       return 7500;
     }
@@ -818,6 +826,10 @@
     Array.prototype.forEach.call(rDots, function(d){
       d.addEventListener("click", function(){ reelStop(); reelShow(+d.dataset.i); reelStart(); });
     });
+    Array.prototype.forEach.call(frames, function(frame, index){
+      if(index !== ri) stopVideo(frame);
+    });
+    resetAndPlayVideo(frames[ri]);
     reelStart();
   }
 
